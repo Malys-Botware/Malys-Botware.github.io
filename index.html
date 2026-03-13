@@ -1,0 +1,1196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malys — Safe Space</title>
+  <meta name="description" content="A personal corner of the internet. Learning, building, and figuring it out one rabbithole at a time.">
+
+  <!-- 
+    ============================================================
+    FONTS
+    ============================================================
+    Using Google Fonts for two typefaces:
+    - "Space Mono" for headings (monospace, techy, distinctive)
+    - "IBM Plex Mono" for body text (clean, readable monospace)
+    
+    To change fonts, just swap the names here and in the 
+    CSS variables below. Google Fonts has tons of free options:
+    https://fonts.google.com
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;1,400&display=swap" rel="stylesheet">
+
+  <style>
+    /* 
+      ============================================================
+      CSS VARIABLES — YOUR THEME CONTROL PANEL
+      ============================================================
+      Change these values to instantly retheme the entire site.
+      This is the easiest thing to experiment with as you learn!
+    */
+    :root {
+      /* Colors */
+      --black:       #0a0a0a;
+      --black-light: #111111;
+      --black-card:  #141414;
+      --red:         #e50000;
+      --red-dim:     #991111;
+      --red-glow:    rgba(229, 0, 0, 0.15);
+      --white:       #e8e0d8;
+      --white-dim:   #887f77;
+      --gray:        #333333;
+      --gray-light:  #555555;
+
+      /* Typography */
+      --font-heading: 'Space Mono', monospace;
+      --font-body:    'IBM Plex Mono', monospace;
+
+      /* Spacing (multiples of 8px — a common design system) */
+      --space-xs:  4px;
+      --space-sm:  8px;
+      --space-md:  16px;
+      --space-lg:  32px;
+      --space-xl:  64px;
+      --space-2xl: 128px;
+
+      /* Layout */
+      --max-width: 720px;
+
+      /* Transitions */
+      --ease: cubic-bezier(0.23, 1, 0.32, 1);
+    }
+
+    /* 
+      ============================================================
+      BASE STYLES — Resets and defaults
+      ============================================================
+    */
+    *, *::before, *::after {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+      font-size: 16px;
+    }
+
+    body {
+      background: var(--black);
+      color: var(--white);
+      font-family: var(--font-body);
+      font-weight: 300;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* Subtle noise texture overlay for depth */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 9999;
+    }
+
+    ::selection {
+      background: var(--red);
+      color: var(--black);
+    }
+
+    a {
+      color: var(--red);
+      text-decoration: none;
+      transition: opacity 0.2s var(--ease);
+    }
+    a:hover {
+      opacity: 0.7;
+    }
+
+    /* 
+      ============================================================
+      LAYOUT HELPERS
+      ============================================================
+    */
+    .container {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 var(--space-lg);
+    }
+
+    section {
+      padding: var(--space-2xl) 0;
+    }
+
+    /* 
+      ============================================================
+      NAV — Minimal top bar
+      ============================================================
+      The nav is fixed at top. Links scroll to sections.
+      Adding a new section? Just add another <a> here.
+    */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(10, 10, 10, 0.85);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--gray);
+      padding: var(--space-md) 0;
+      transition: transform 0.3s var(--ease);
+    }
+
+    nav .container {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 0.85rem;
+      color: var(--red);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: var(--space-lg);
+      list-style: none;
+    }
+
+    .nav-links a {
+      font-size: 0.75rem;
+      color: var(--white-dim);
+      letter-spacing: 1.5px;
+      text-transform: uppercase;
+      transition: color 0.2s var(--ease);
+    }
+
+    .nav-links a:hover,
+    .nav-links a.active {
+      color: var(--red);
+      opacity: 1;
+    }
+
+    /* Mobile nav toggle */
+    .nav-toggle {
+      display: none;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: var(--space-sm);
+    }
+    .nav-toggle span {
+      display: block;
+      width: 20px;
+      height: 2px;
+      background: var(--white);
+      margin: 4px 0;
+      transition: all 0.3s var(--ease);
+    }
+
+    /* 
+      ============================================================
+      HERO SECTION — Character + Introduction
+      ============================================================
+    */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      padding-top: var(--space-xl);
+    }
+
+    /* Red gradient glow behind the character */
+    .hero::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -60%);
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, var(--red-glow) 0%, transparent 70%);
+      pointer-events: none;
+    }
+
+    .hero-content {
+      display: grid;
+      grid-template-columns: 200px 1fr;
+      gap: var(--space-xl);
+      align-items: center;
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-text h1 {
+      font-family: var(--font-heading);
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: var(--space-md);
+    }
+    .hero-text h1 .red { color: var(--red); }
+
+    .hero-text .tagline {
+      font-size: 0.95rem;
+      color: var(--white-dim);
+      margin-bottom: var(--space-lg);
+      max-width: 480px;
+    }
+
+    .hero-text .status {
+      display: inline-flex;
+      align-items: center;
+      gap: var(--space-sm);
+      font-size: 0.75rem;
+      color: var(--red);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+    }
+    .hero-text .status::before {
+      content: '';
+      width: 6px;
+      height: 6px;
+      background: var(--red);
+      border-radius: 50%;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.3; }
+    }
+
+    /* 
+      ============================================================
+      CHARACTER SVG — The mascot, expanded from the face
+      ============================================================
+      This is an inline SVG so you can easily edit it.
+      The character has:
+      - A hooded cloak/body
+      - The original face (crescent eye, X eye, sharp-tooth grin)
+      - Arms/hands
+      
+      Want to modify the character? Each part is labeled 
+      with a comment. SVGs are just XML — tweak the numbers!
+    */
+    .character-wrap {
+      position: relative;
+      width: 200px;
+      height: 300px;
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    .character-wrap svg {
+      width: 100%;
+      height: 100%;
+      filter: drop-shadow(0 0 30px rgba(229, 0, 0, 0.2));
+    }
+
+    /* 
+      ============================================================
+      SECTION: ABOUT / MANIFESTO
+      ============================================================
+      Your beliefs. Your values. The stuff that matters.
+      Inspired by 37signals' opinionated clarity.
+    */
+    .about {
+      border-top: 1px solid var(--gray);
+    }
+
+    .section-label {
+      font-family: var(--font-heading);
+      font-size: 0.7rem;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: var(--space-lg);
+    }
+
+    .section-title {
+      font-family: var(--font-heading);
+      font-size: clamp(1.4rem, 3vw, 2rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: var(--space-lg);
+    }
+
+    .about-text p {
+      margin-bottom: var(--space-md);
+      color: var(--white-dim);
+      font-size: 0.9rem;
+    }
+
+    .beliefs {
+      margin-top: var(--space-xl);
+      display: grid;
+      gap: var(--space-lg);
+    }
+
+    .belief {
+      padding-left: var(--space-lg);
+      border-left: 2px solid var(--red-dim);
+    }
+
+    .belief h3 {
+      font-family: var(--font-heading);
+      font-size: 0.9rem;
+      font-weight: 700;
+      margin-bottom: var(--space-sm);
+      color: var(--white);
+    }
+
+    .belief p {
+      font-size: 0.85rem;
+      color: var(--white-dim);
+    }
+
+    /* 
+      ============================================================
+      SECTION: NOW — What you're currently doing/learning
+      ============================================================
+      This is your "now page" (nownownow.com concept).
+      Update this whenever your focus shifts.
+    */
+    .now {
+      border-top: 1px solid var(--gray);
+    }
+
+    .now-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: var(--space-lg);
+      margin-top: var(--space-lg);
+    }
+
+    .now-card {
+      background: var(--black-card);
+      border: 1px solid var(--gray);
+      padding: var(--space-lg);
+      transition: border-color 0.3s var(--ease);
+    }
+
+    .now-card:hover {
+      border-color: var(--red-dim);
+    }
+
+    .now-card h3 {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--red);
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: var(--space-md);
+    }
+
+    .now-card p {
+      font-size: 0.85rem;
+      color: var(--white-dim);
+    }
+
+    .now-updated {
+      margin-top: var(--space-lg);
+      font-size: 0.75rem;
+      color: var(--gray-light);
+      font-style: italic;
+    }
+
+    /* 
+      ============================================================
+      SECTION: PROJECTS
+      ============================================================
+      Your repos and builds. Add more .project-card blocks
+      as you ship new things.
+    */
+    .projects {
+      border-top: 1px solid var(--gray);
+    }
+
+    .project-card {
+      background: var(--black-card);
+      border: 1px solid var(--gray);
+      padding: var(--space-lg);
+      margin-bottom: var(--space-lg);
+      transition: border-color 0.3s var(--ease);
+    }
+
+    .project-card:hover {
+      border-color: var(--red-dim);
+    }
+
+    .project-card .project-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: var(--space-md);
+    }
+
+    .project-card h3 {
+      font-family: var(--font-heading);
+      font-size: 1rem;
+      font-weight: 700;
+    }
+
+    .project-card .project-tags {
+      display: flex;
+      gap: var(--space-sm);
+      flex-wrap: wrap;
+    }
+
+    .project-card .tag {
+      font-size: 0.65rem;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      color: var(--red);
+      border: 1px solid var(--red-dim);
+      padding: 2px 8px;
+    }
+
+    .project-card p {
+      font-size: 0.85rem;
+      color: var(--white-dim);
+      margin-bottom: var(--space-md);
+    }
+
+    .project-card .project-link {
+      font-size: 0.8rem;
+      font-family: var(--font-heading);
+      letter-spacing: 1px;
+    }
+
+    /* 
+      ============================================================
+      SECTION: JOURNAL
+      ============================================================
+      Blog-style entries. Each .journal-entry is one post.
+      To add a new entry, copy one of the blocks and change
+      the content. Newest entries go on top.
+    */
+    .journal {
+      border-top: 1px solid var(--gray);
+    }
+
+    .journal-entry {
+      padding-bottom: var(--space-xl);
+      margin-bottom: var(--space-xl);
+      border-bottom: 1px solid var(--gray);
+    }
+    .journal-entry:last-child {
+      border-bottom: none;
+    }
+
+    .journal-entry .entry-date {
+      font-size: 0.7rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--red);
+      margin-bottom: var(--space-sm);
+    }
+
+    .journal-entry h3 {
+      font-family: var(--font-heading);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: var(--space-md);
+      line-height: 1.4;
+    }
+
+    .journal-entry p {
+      font-size: 0.88rem;
+      color: var(--white-dim);
+      margin-bottom: var(--space-md);
+    }
+
+    .journal-entry p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* 
+      ============================================================
+      SECTION: CONNECT — Social links
+      ============================================================
+      Add/remove links here. Each one is just an <a> tag.
+    */
+    .connect {
+      border-top: 1px solid var(--gray);
+    }
+
+    .social-links {
+      display: flex;
+      flex-direction: column;
+      gap: var(--space-md);
+      margin-top: var(--space-lg);
+    }
+
+    .social-link {
+      display: flex;
+      align-items: center;
+      gap: var(--space-md);
+      padding: var(--space-md) var(--space-lg);
+      border: 1px solid var(--gray);
+      background: var(--black-card);
+      transition: all 0.3s var(--ease);
+      text-decoration: none;
+    }
+
+    .social-link:hover {
+      border-color: var(--red-dim);
+      opacity: 1;
+      transform: translateX(4px);
+    }
+
+    .social-link .social-icon {
+      width: 20px;
+      height: 20px;
+      flex-shrink: 0;
+    }
+    .social-link .social-icon svg {
+      width: 100%;
+      height: 100%;
+      fill: var(--red);
+    }
+
+    .social-link .social-info {
+      flex: 1;
+    }
+
+    .social-link .social-name {
+      font-family: var(--font-heading);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 1px;
+    }
+
+    .social-link .social-handle {
+      font-size: 0.75rem;
+      color: var(--white-dim);
+    }
+
+    .social-link .social-arrow {
+      color: var(--red);
+      font-size: 1.2rem;
+      transition: transform 0.2s var(--ease);
+    }
+
+    .social-link:hover .social-arrow {
+      transform: translateX(4px);
+    }
+
+    /* 
+      ============================================================
+      FOOTER
+      ============================================================
+    */
+    footer {
+      border-top: 1px solid var(--gray);
+      padding: var(--space-xl) 0;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.75rem;
+      color: var(--gray-light);
+    }
+
+    footer .footer-character {
+      margin-bottom: var(--space-md);
+      opacity: 0.3;
+    }
+
+    /* 
+      ============================================================
+      SCROLL ANIMATIONS
+      ============================================================
+      Elements with .reveal will fade in as they enter the viewport.
+      This uses the Intersection Observer API (vanilla JS, no library).
+    */
+    .reveal {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s var(--ease), transform 0.6s var(--ease);
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* 
+      ============================================================
+      RESPONSIVE — Mobile styles
+      ============================================================
+    */
+    @media (max-width: 640px) {
+      .hero-content {
+        grid-template-columns: 1fr;
+        text-align: center;
+        justify-items: center;
+      }
+
+      .character-wrap {
+        width: 150px;
+        height: 225px;
+      }
+
+      .hero-text .tagline {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .nav-links {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0; right: 0;
+        background: rgba(10, 10, 10, 0.95);
+        flex-direction: column;
+        padding: var(--space-lg);
+        gap: var(--space-md);
+        border-bottom: 1px solid var(--gray);
+      }
+
+      .nav-links.open {
+        display: flex;
+      }
+
+      .nav-toggle {
+        display: block;
+      }
+
+      .belief {
+        padding-left: var(--space-md);
+      }
+
+      section {
+        padding: var(--space-xl) 0;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- 
+    ============================================================
+    NAVIGATION
+    ============================================================
+    To add a new section to the nav:
+    1. Add a new <li><a href="#your-section-id">Label</a></li>
+    2. Make sure the section below has id="your-section-id"
+  -->
+  <nav>
+    <div class="container">
+      <a href="#" class="nav-logo">Malys</a>
+      <button class="nav-toggle" onclick="document.querySelector('.nav-links').classList.toggle('open')" aria-label="Toggle navigation">
+        <span></span><span></span><span></span>
+      </button>
+      <ul class="nav-links">
+        <li><a href="#about">About</a></li>
+        <li><a href="#now">Now</a></li>
+        <li><a href="#projects">Projects</a></li>
+        <li><a href="#journal">Journal</a></li>
+        <li><a href="#connect">Connect</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- 
+    ============================================================
+    HERO SECTION
+    ============================================================
+  -->
+  <section class="hero" id="top">
+    <div class="container">
+      <div class="hero-content">
+
+        <!-- CHARACTER — Full-body SVG mascot -->
+        <div class="character-wrap">
+          <svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">
+            <!-- Hood / Cloak outer shape -->
+            <path d="M100 20 C50 20, 20 70, 20 130 C20 180, 30 220, 40 260 L60 290 L140 290 L160 260 C170 220, 180 180, 180 130 C180 70, 150 20, 100 20Z" 
+                  fill="#0a0a0a" stroke="#1a1a1a" stroke-width="1"/>
+            
+            <!-- Inner hood shadow -->
+            <path d="M100 30 C58 30, 32 75, 32 128 C32 170, 38 200, 45 235 L65 275 L135 275 L155 235 C162 200, 168 170, 168 128 C168 75, 142 30, 100 30Z" 
+                  fill="#050505"/>
+
+            <!-- FACE: Crescent/squinting left eye — thick arc -->
+            <path d="M66 100 Q80 82, 98 96" 
+                  fill="none" stroke="#e50000" stroke-width="6" stroke-linecap="round"/>
+            
+            <!-- FACE: X right eye — bold and chunky -->
+            <line x1="113" y1="88" x2="135" y2="110" stroke="#e50000" stroke-width="7" stroke-linecap="round"/>
+            <line x1="135" y1="88" x2="113" y2="110" stroke="#e50000" stroke-width="7" stroke-linecap="round"/>
+            
+            <!-- FACE: Wide grin — upper teeth (pointing DOWN) -->
+            <polygon points="58,126  66,144  74,126"  fill="#e50000"/>
+            <polygon points="78,126  86,146  94,126"  fill="#e50000"/>
+            <polygon points="98,125  106,146  114,125" fill="#e50000"/>
+            <polygon points="118,126  126,146  134,126" fill="#e50000"/>
+
+            <!-- FACE: Wide grin — lower teeth (pointing UP) -->
+            <polygon points="66,148  74,130  82,148"  fill="#e50000"/>
+            <polygon points="88,150  96,130  104,150" fill="#e50000"/>
+            <polygon points="110,150  118,130  126,150" fill="#e50000"/>
+            <polygon points="130,148  138,132  146,148" fill="#e50000"/>
+            
+            <!-- Hands emerging from cloak -->
+            <!-- Left hand -->
+            <path d="M35 220 Q20 215, 18 200 Q16 210, 22 222 Q15 218, 12 205 Q12 215, 20 228 L35 235Z" 
+                  fill="#1a1a1a" stroke="#e50000" stroke-width="0.5" opacity="0.6"/>
+            <!-- Right hand -->
+            <path d="M165 220 Q180 215, 182 200 Q184 210, 178 222 Q185 218, 188 205 Q188 215, 180 228 L165 235Z" 
+                  fill="#1a1a1a" stroke="#e50000" stroke-width="0.5" opacity="0.6"/>
+
+            <!-- Cloak bottom tatter -->
+            <path d="M60 290 L65 280 L75 290 L85 278 L95 290 L105 278 L115 290 L125 278 L135 290 L140 280 L140 290Z" 
+                  fill="#0a0a0a" stroke="#1a1a1a" stroke-width="0.5"/>
+          </svg>
+        </div>
+
+        <!-- Hero text -->
+        <div class="hero-text">
+          <h1>hey, i'm <span class="red">malys</span></h1>
+          <p class="tagline">
+            learning to code, one rabbithole at a time. tinkering with linux, 
+            building things that might be embarrassing but feel good to ship, 
+            and trying to enjoy the process without burning out.
+          </p>
+          <span class="status">currently building</span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 
+    ============================================================
+    ABOUT / MANIFESTO
+    ============================================================
+    Your values and beliefs. Edit these to match your own.
+    The structure: intro paragraph + belief cards.
+  -->
+  <section class="about" id="about">
+    <div class="container">
+      <div class="section-label reveal">Beliefs</div>
+      <h2 class="section-title reveal">the stuff that actually matters</h2>
+      
+      <div class="about-text reveal">
+        <p>
+          I went from being a casual windows consumer to installing linux on a dusty alienware laptop 
+          and falling into the deepest rabbithole of my life. One month in and I've already shipped 
+          my first repo, broken my system more times than I can count, and realized that writing 
+          things out is weirdly therapeutic.
+        </p>
+        <p>
+          Some things from 37signals really resonate with me — the idea that you can build something 
+          real without burning yourself to the ground. That simplicity isn't laziness, it's discipline. 
+          That you don't need permission to start, you just need to start.
+        </p>
+      </div>
+
+      <div class="beliefs">
+        <!-- 
+          BELIEF CARDS — Add, remove, or edit these.
+          Each one is a <div class="belief"> with an h3 and p.
+        -->
+        <div class="belief reveal">
+          <h3>learn by building, not just consuming</h3>
+          <p>
+            Grinding through lessons has its place, but the real learning happens when you make 
+            something, break it, and figure out why. My first repo is small and kinda rough 
+            but it taught me more than any tutorial.
+          </p>
+        </div>
+
+        <div class="belief reveal">
+          <h3>ship it, even if it's embarrassing</h3>
+          <p>
+            Perfectionism is the enemy. Put it out there. You can't get feedback on code that 
+            lives only on your machine. The act of making something public changes how you 
+            think about it.
+          </p>
+        </div>
+
+        <div class="belief reveal">
+          <h3>slow down to go faster</h3>
+          <p>
+            The can't-stop-won't-stop mindset is fun until you crash. Sustainable pace beats 
+            heroic sprints. 37signals runs on 40-hour weeks and they've been profitable for 
+            25 years. There's something to that.
+          </p>
+        </div>
+
+        <div class="belief reveal">
+          <h3>own your space</h3>
+          <p>
+            This site exists because a reddit post got deleted before anyone could see it. 
+            That's fine — no ill will. But it's a reminder: if you want a voice that can't 
+            be moderated away, you need your own corner of the internet.
+          </p>
+        </div>
+
+        <div class="belief reveal">
+          <h3>ai is a tool, not a crutch</h3>
+          <p>
+            I use AI. I'm not going to pretend I don't. But the goal is to understand 
+            what the code does, not just to generate it. The basics matter. 
+            You can't debug what you don't understand.
+          </p>
+        </div>
+
+        <div class="belief reveal">
+          <h3>keep going, keep writing</h3>
+          <p>
+            Writing things out organizes thoughts better than any productivity system. 
+            This whole site started because I realized journaling helps me process 
+            what I'm learning. So here we are.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 
+    ============================================================
+    NOW SECTION — What you're currently working on
+    ============================================================
+    Update this whenever your focus changes. 
+    The "now page" concept: https://nownownow.com/about
+  -->
+  <section class="now" id="now">
+    <div class="container">
+      <div class="section-label reveal">Now</div>
+      <h2 class="section-title reveal">what i'm up to right now</h2>
+
+      <div class="now-grid">
+        <div class="now-card reveal">
+          <h3>Linux</h3>
+          <p>
+            Running Garuda Linux on an Alienware 17 R3 with COSMIC desktop and i3 window manager. 
+            Currently working on getting i3 fully configured — polybar, picom, scaling for the 4K 
+            display, the whole deal. Broke it and fixed it more times than I can count.
+          </p>
+        </div>
+
+        <div class="now-card reveal">
+          <h3>Coding</h3>
+          <p>
+            Learning Python and TypeScript. Getting more comfortable with shell commands and git. 
+            Trying to actually understand my own repo's code rather than just having it work. 
+            The goal is fundamentals before frameworks.
+          </p>
+        </div>
+
+        <div class="now-card reveal">
+          <h3>This Site</h3>
+          <p>
+            Using this as an ongoing project to learn web development. It's a single HTML file 
+            right now — pure HTML, CSS, and vanilla JS. No frameworks, no build tools. 
+            Just something I can actually read and understand.
+          </p>
+        </div>
+
+        <div class="now-card reveal">
+          <h3>Habits</h3>
+          <p>
+            Trying to build sustainable practices before bad habits set in. Time management, 
+            balancing structured learning with project work, and forcing myself to write more. 
+            Also trying to talk to actual humans in tech. It's a work in progress.
+          </p>
+        </div>
+      </div>
+
+      <p class="now-updated reveal">Last updated: March 2026</p>
+    </div>
+  </section>
+
+  <!-- 
+    ============================================================
+    PROJECTS SECTION
+    ============================================================
+    To add a new project:
+    1. Copy a .project-card block
+    2. Change the title, tags, description, and link
+    3. That's it
+  -->
+  <section class="projects" id="projects">
+    <div class="container">
+      <div class="section-label reveal">Projects</div>
+      <h2 class="section-title reveal">things i've built</h2>
+
+      <!-- PROJECT 1: i3 Keybinding Cheatsheet -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <h3>i3 Keybinding Cheatsheet &amp; Editor</h3>
+          <div class="project-tags">
+            <span class="tag">Python</span>
+            <span class="tag">Web UI</span>
+            <span class="tag">i3wm</span>
+          </div>
+        </div>
+        <p>
+          My first repo. Parses an i3 config file and serves a local web UI for viewing and 
+          editing keybindings. Nothing huge, almost kinda embarrassing, but it felt good to 
+          put something real out on the internet. And I learned a ton building it.
+        </p>
+        <a href="https://github.com/Malys-Botware/i3-keybindings-cheatsheet" class="project-link">view on github →</a>
+      </div>
+
+      <!-- PROJECT 2: This Website -->
+      <div class="project-card reveal">
+        <div class="project-header">
+          <h3>This Website</h3>
+          <div class="project-tags">
+            <span class="tag">HTML</span>
+            <span class="tag">CSS</span>
+            <span class="tag">JS</span>
+          </div>
+        </div>
+        <p>
+          A single-file personal site built to be readable, learnable, and easy to modify. 
+          No frameworks. No build steps. Just a text editor and a browser. 
+          An ongoing project to learn web development while having something to show for it.
+        </p>
+        <a href="https://github.com/Malys-Botware/Malys-Botware.github.io" class="project-link">view source →</a>
+      </div>
+
+      <!-- 
+        Add more projects here as you build them!
+        Just copy one of the project-card blocks above.
+      -->
+
+    </div>
+  </section>
+
+  <!-- 
+    ============================================================
+    JOURNAL SECTION
+    ============================================================
+    Blog-style entries. Newest on top.
+    To add a new entry:
+    1. Copy a .journal-entry block
+    2. Put it ABOVE the previous entries
+    3. Change the date, title, and paragraphs
+  -->
+  <section class="journal" id="journal">
+    <div class="container">
+      <div class="section-label reveal">Journal</div>
+      <h2 class="section-title reveal">thinking out loud</h2>
+
+      <!-- ENTRY 1 -->
+      <article class="journal-entry reveal">
+        <div class="entry-date">March 12, 2026</div>
+        <h3>the post that started this</h3>
+        <p>
+          I wrote a long post on r/learnprogramming. Put real thought into it — where I'm at, 
+          what I'm struggling with, honest questions about balancing learning with building, 
+          time management, and how an introvert starts connecting with other people in tech. 
+          The mods removed it before anyone could even read it.
+        </p>
+        <p>
+          And you know what? No ill will. The sub has rules and I probably should've read 
+          the FAQ more carefully. But it did make me realize something: I need my own space. 
+          Somewhere my thoughts can exist without getting caught in someone else's filter.
+        </p>
+        <p>
+          So here we are. This site is that space. It started as frustration but turned into 
+          something I'm actually excited about. Just writing that reddit post — even though 
+          nobody saw it — helped me organize my thoughts. Turns out writing things down is 
+          weirdly therapeutic. Who knew.
+        </p>
+        <p>
+          I'm about a month into learning to code. Started by installing linux on an old 
+          alienware laptop. Put my first repo on github yesterday — an i3 keybinding 
+          cheatsheet and editor. It's small but it's real and it's mine. Every new thing 
+          I learn opens another door and then I'm down the next rabbithole. 
+          Can't stop won't stop... until I crash. Then repeat.
+        </p>
+        <p>
+          I know I need to slow down. I know I rely on AI too much. I know I should talk 
+          to actual humans more. I'm working on all of it. But at least now I have somewhere 
+          to write about the process while I figure it out.
+        </p>
+        <p>
+          Gonna keep on keepin' on, I suppose.
+        </p>
+      </article>
+
+      <!-- 
+        Add new journal entries here!
+        Copy the <article class="journal-entry reveal"> block above 
+        and place new entries BEFORE the older ones.
+      -->
+
+    </div>
+  </section>
+
+  <!-- 
+    ============================================================
+    CONNECT SECTION — Social links
+    ============================================================
+    To add a new social link:
+    1. Copy a .social-link block
+    2. Change the href, icon SVG, name, and handle
+    
+    SVG icons: You can find free ones at https://simpleicons.org
+  -->
+  <section class="connect" id="connect">
+    <div class="container">
+      <div class="section-label reveal">Connect</div>
+      <h2 class="section-title reveal">find me elsewhere</h2>
+
+      <div class="social-links">
+
+        <!-- GitHub -->
+        <a href="https://github.com/Malys-Botware" class="social-link reveal" target="_blank" rel="noopener">
+          <div class="social-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+            </svg>
+          </div>
+          <div class="social-info">
+            <div class="social-name">GitHub</div>
+            <div class="social-handle">Malys-Botware</div>
+          </div>
+          <span class="social-arrow">→</span>
+        </a>
+
+        <!-- X (Twitter) -->
+        <a href="https://x.com/Malys520572" class="social-link reveal" target="_blank" rel="noopener">
+          <div class="social-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </div>
+          <div class="social-info">
+            <div class="social-name">X</div>
+            <div class="social-handle">@Malys520572</div>
+          </div>
+          <span class="social-arrow">→</span>
+        </a>
+
+        <!-- Reddit -->
+        <a href="https://reddit.com/u/Electrical_Funny6177" class="social-link reveal" target="_blank" rel="noopener">
+          <div class="social-icon">
+            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+              <path d="M12 0A12 12 0 000 12a12 12 0 0012 12 12 12 0 0012-12A12 12 0 0012 0zm5.01 4.744c.688 0 1.25.561 1.25 1.249a1.25 1.25 0 01-2.498.056l-2.597-.547-.8 3.747c1.824.07 3.48.632 4.674 1.488.308-.309.73-.491 1.207-.491.968 0 1.754.786 1.754 1.754 0 .716-.435 1.333-1.01 1.614a3.111 3.111 0 01.042.52c0 2.694-3.13 4.87-7.004 4.87-3.874 0-7.004-2.176-7.004-4.87 0-.183.015-.366.043-.534A1.748 1.748 0 014.028 12c0-.968.786-1.754 1.754-1.754.463 0 .898.196 1.207.49 1.207-.883 2.878-1.43 4.744-1.487l.885-4.182a.342.342 0 01.14-.197.35.35 0 01.238-.042l2.906.617a1.214 1.214 0 011.108-.701zM9.25 12C8.561 12 8 12.562 8 13.25c0 .687.561 1.248 1.25 1.248.687 0 1.248-.561 1.248-1.249 0-.688-.561-1.249-1.249-1.249zm5.5 0c-.687 0-1.248.561-1.248 1.25 0 .687.561 1.248 1.249 1.248.688 0 1.249-.561 1.249-1.249 0-.687-.562-1.249-1.25-1.249zm-5.466 3.99a.327.327 0 00-.231.094.33.33 0 000 .463c.842.842 2.484.913 2.961.913.477 0 2.105-.056 2.961-.913a.361.361 0 000-.463.327.327 0 00-.462 0c-.545.533-1.684.73-2.512.73-.828 0-1.967-.197-2.512-.73a.326.326 0 00-.205-.094z"/>
+            </svg>
+          </div>
+          <div class="social-info">
+            <div class="social-name">Reddit</div>
+            <div class="social-handle">u/Electrical_Funny6177</div>
+          </div>
+          <span class="social-arrow">→</span>
+        </a>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- 
+    ============================================================
+    FOOTER
+    ============================================================
+  -->
+  <footer>
+    <div class="container">
+      <!-- Small version of the character face -->
+      <div class="footer-character">
+        <svg width="32" height="32" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+          <!-- Crescent eye -->
+          <path d="M18 48 Q32 28, 50 44" fill="none" stroke="#e50000" stroke-width="6" stroke-linecap="round"/>
+          <!-- X eye -->
+          <line x1="60" y1="32" x2="80" y2="52" stroke="#e50000" stroke-width="7" stroke-linecap="round"/>
+          <line x1="80" y1="32" x2="60" y2="52" stroke="#e50000" stroke-width="7" stroke-linecap="round"/>
+          <!-- Upper teeth (pointing down) -->
+          <polygon points="12,64 22,82 32,64" fill="#e50000"/>
+          <polygon points="36,64 46,84 56,64" fill="#e50000"/>
+          <polygon points="60,64 70,84 80,64" fill="#e50000"/>
+          <!-- Lower teeth (pointing up) -->
+          <polygon points="24,86 34,68 44,86" fill="#e50000"/>
+          <polygon points="48,86 58,68 68,86" fill="#e50000"/>
+          <polygon points="72,86 82,70 92,86" fill="#e50000"/>
+        </svg>
+      </div>
+      <p>built by hand, one line at a time.</p>
+      <p style="margin-top: 4px;">keep on keepin' on.</p>
+    </div>
+  </footer>
+
+  <!-- 
+    ============================================================
+    JAVASCRIPT — Scroll reveal + active nav highlighting
+    ============================================================
+    This is vanilla JS — no libraries needed.
+    
+    IntersectionObserver watches for .reveal elements entering 
+    the viewport and adds the .visible class to trigger the 
+    CSS animation.
+  -->
+  <script>
+    // --- Scroll Reveal ---
+    // This makes elements fade in as you scroll down.
+    // Any element with class="reveal" will animate in.
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('visible');
+        }
+      });
+    }, {
+      threshold: 0.1,       // Trigger when 10% visible
+      rootMargin: '0px 0px -50px 0px'  // Slight offset from bottom
+    });
+
+    // Find all elements with .reveal and watch them
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // --- Active Nav Link ---
+    // Highlights the nav link for the section you're currently viewing.
+    const sections = document.querySelectorAll('section[id]');
+    const navLinks = document.querySelectorAll('.nav-links a');
+
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(section => {
+        const top = section.offsetTop - 100;
+        if (window.scrollY >= top) {
+          current = section.getAttribute('id');
+        }
+      });
+      navLinks.forEach(link => {
+        link.classList.remove('active');
+        if (link.getAttribute('href') === `#${current}`) {
+          link.classList.add('active');
+        }
+      });
+    });
+
+    // --- Close mobile nav on link click ---
+    document.querySelectorAll('.nav-links a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-links').classList.remove('open');
+      });
+    });
+  </script>
+
+</body>
+</html>
