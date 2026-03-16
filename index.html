@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -329,19 +330,8 @@
   <section class="games" id="games"><div class="container">
     <div class="section-label reveal">Games</div>
     <h2 class="section-title reveal">things i've made to play</h2>
-    <div class="games-grid" id="gamesGrid">
-      <a href="games/solitaire.html" class="game-card reveal visible" target="_blank" rel="noopener">
-        <div class="game-card-icon">♠</div>
-        <div class="game-card-info">
-          <h3>Solitaire</h3>
-          <p>Classic Klondike solitaire. Built from scratch with vanilla JS — no libraries, no frameworks. Just cards and logic.</p>
-          <div class="game-card-tags">
-            <span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span>
-          </div>
-        </div>
-        <span class="game-card-arrow">→</span>
-      </a>
-    </div>
+    <div class="admin-toolbar" id="gamesToolbar"><span class="toolbar-status">games</span><button class="btn btn-primary" onclick="openGameEditor()">+ add game</button></div>
+    <div class="games-grid" id="gamesGrid"><div class="section-loading">loading...</div></div>
   </div></section>
 
   <section class="journal" id="journal"><div class="container">
@@ -379,6 +369,8 @@
   <div class="modal-overlay" id="entryEditorModal"><div class="modal"><h3 id="entryEditorTitle">New Entry</h3><div class="error-msg" id="entryEditorError"></div><label>Title</label><input type="text" id="entryTitle" placeholder="entry title"><label>Date</label><input type="text" id="entryDate" placeholder="March 14, 2026"><label>Content</label><div class="quill-wrap"><div id="entryEditorQuill"></div></div><div class="modal-actions"><button class="btn" onclick="closeModal('entryEditorModal')">Cancel</button><button class="btn btn-primary" id="entryEditorSaveBtn" onclick="saveEntry()">Save Draft</button></div></div></div>
 
   <div class="modal-overlay" id="socialEditorModal"><div class="modal"><h3 id="socialEditorTitle">New Social Link</h3><div class="error-msg" id="socialEditorError"></div><label>Platform</label><select id="socialIcon"><option value="github">GitHub</option><option value="x">X (Twitter)</option><option value="reddit">Reddit</option><option value="linkedin">LinkedIn</option><option value="discord">Discord</option><option value="youtube">YouTube</option><option value="twitch">Twitch</option><option value="email">Email</option><option value="website">Website</option></select><label>Display Name</label><input type="text" id="socialName" placeholder="GitHub"><label>Handle / Username</label><input type="text" id="socialHandle" placeholder="Malys-Botware"><label>URL</label><input type="text" id="socialUrl" placeholder="https://github.com/Malys-Botware"><div class="modal-actions"><button class="btn" onclick="closeModal('socialEditorModal')">Cancel</button><button class="btn btn-primary" id="socialEditorSaveBtn" onclick="saveSocial()">Save</button></div></div></div>
+
+  <div class="modal-overlay" id="gameEditorModal"><div class="modal"><h3 id="gameEditorTitle">New Game</h3><div class="error-msg" id="gameEditorError"></div><label>Title</label><input type="text" id="gameTitle" placeholder="Solitaire"><label>Icon (emoji or symbol)</label><input type="text" id="gameIcon" placeholder="♠"><label>Description</label><textarea id="gameDesc" placeholder="what this game is..."></textarea><label>Tags (comma-separated)</label><input type="text" id="gameTags" placeholder="HTML, CSS, JS"><label>URL (relative or absolute)</label><input type="text" id="gameUrl" placeholder="games/solitaire.html"><div class="modal-actions"><button class="btn" onclick="closeModal('gameEditorModal')">Cancel</button><button class="btn btn-primary" id="gameEditorSaveBtn" onclick="saveGame()">Save</button></div></div></div>
 
   <div class="modal-overlay" id="footerEditorModal"><div class="modal"><h3>Edit Footer</h3><div class="error-msg" id="footerEditorError"></div><label>Line 1</label><input type="text" id="footerLine1" placeholder="built by thought..."><label>Line 2</label><input type="text" id="footerLine2" placeholder="keep on keepin' on."><div class="modal-actions"><button class="btn" onclick="closeModal('footerEditorModal')">Cancel</button><button class="btn btn-primary" onclick="saveFooter()">Save</button></div></div></div>
 
@@ -437,6 +429,7 @@
     const S_TILES=[{id:'st1',title:'System',content:'<p>D.E.\'s: Cosmic and i3 till im happy with the i3 config things to fix in i3:</p><p>- some apps not working properly or as expected</p><p>ex. - mission control opens to blank/translucent window</p><p>- garuda toolbox can\'t run certain diags or sys update</p><p>general: lockscreen needs theme still</p>',published:true,sort_order:1},{id:'st2',title:'Lessons',content:'<p>- Onward from ch3 at last! got to ch5 l2</p>',published:true,sort_order:2},{id:'st3',title:'This Site',content:'<p>- tweak "hero"</p>',published:true,sort_order:3},{id:'st4',title:'Keybindings Cheatsheet / Editor',content:'<p>undecided where i want to go with it rn, seems to be functioning as expected.</p><p>gonna try to learn how exactly it works before going too much farther.</p>',published:true,sort_order:4}];
     const S_PROJECTS=[{id:'sp1',title:'i3 Keybinding Cheatsheet & Editor',tags:'Python, Web UI, i3wm',description:'My first repo. Parses an i3 config file and serves a local web UI for viewing and editing keybindings. Nothing huge, almost kinda embarrassing, but it felt good to put something real out on the internet. And I learned a ton building it.',link_url:'https://github.com/Malys-Botware/i3-keybindings-cheatsheet',link_text:'view on github \u2192',sort_order:1},{id:'sp2',title:'This Website',tags:'HTML, CSS, JS, Supabase',description:'A single-file personal site built to be readable, learnable, and easy to modify. No frameworks. No build steps. Just a text editor and a browser. An ongoing project to learn web development while having something to show for it.',link_url:'https://github.com/Malys-Botware/Malys-Botware.github.io',link_text:'view source \u2192',sort_order:2}];
     const S_SOCIALS=[{id:'ss1',name:'GitHub',handle:'Malys-Botware',url:'https://github.com/Malys-Botware',icon_key:'github',sort_order:1},{id:'ss2',name:'X',handle:'@Malys520572',url:'https://x.com/Malys520572',icon_key:'x',sort_order:2},{id:'ss3',name:'Reddit',handle:'u/Electrical_Funny6177',url:'https://reddit.com/u/Electrical_Funny6177',icon_key:'reddit',sort_order:3}];
+    const S_GAMES=[{id:'sg1',title:'Solitaire',icon:'♠',description:'Classic Klondike solitaire. Draw 3, drag and drop. Built from scratch with vanilla JS — no libraries, no frameworks. Just cards and logic.',tags:'HTML, CSS, JS',url:'games/solitaire.html',sort_order:1}];
     const S_ENTRIES=[{id:'se3',entry_date:'March 14, 2026',title:'lesson day',content:'<p>how many lessons can you get through? be sure to use potions if you have the gems! don\'t forget about the other usefull tools at your disposal like embers, potions, quests and more!</p><p>talk to boots if needed! he can be rather helpful if you talk through your problem with him!</p><p>go back and review your previous couple lessons or maybe even chapters! especially if you had an extended session previously</p>',published:true},{id:'se2',entry_date:'March 13, 2026',title:'veg day',content:'<p>just a day to sit back and breath. lay back, get comfy and poke around in the tools you\'re learning or go browse some youtube / twitch / whatever tickles your fancy. or maybe you\'ve been putting off a project around the house, gaming? nows the day</p><p>what i got up to today: explored github some more. all commits updating the site today done from github, without AI. just the keyboard and a little mouse action here and there thought about getting back into boot.dev but just need to let my brain settle. watched some youtube. answered a q wrong on x shoulda been pwd - print working directory shows absolute path ended up doing a couple/few lessons</p><p>fairly light easy day, weather coulda beem nicer, plans for tomorrow? hmm.</p>',published:true},{id:'se1',entry_date:'March 12, 2026',title:'the post that started this',content:'<p>I wrote a long post on r/learnprogramming. Put real thought into it \u2014 where I\'m at, what I\'m struggling with, honest questions about balancing learning with building, time management, and how an introvert starts connecting with other people in tech. The mods removed it before anyone could even read it.</p><p>And you know what? No ill will. The sub has rules and I probably should\'ve read the FAQ more carefully. But it did help me realize something: I need my own space. Somewhere my thoughts can exist without getting caught in someone else\'s filter.</p><p>So here we are. This site is that space. It started as frustration but turned into something I\'m actually excited about. Just writing that reddit post \u2014 even though nobody saw it \u2014 helped me organize my thoughts. Turns out writing things down is weirdly therapeutic. Who knew.</p><p>I\'m about a month into learning to code. Started by installing linux on an old alienware laptop. Put my first repo on github yesterday \u2014 an i3 keybinding cheatsheet and editor. It\'s small but it\'s real and it\'s mine. Every new thing I learn opens another door and then I\'m down the next rabbithole. Can\'t stop won\'t stop... until I crash. Then repeat.</p><p>I know I need to slow down. I know I rely on AI too much. I know I should talk to actual humans more. I\'m working on all of it. But at least now I have somewhere to write about the process while I figure it out.</p><p>Gonna keep on keepin\' on, I suppose.</p>',published:true}];
 
     /* HELPERS */
@@ -471,7 +464,7 @@
 
     function updateUI(){
       var admin=!!currentUser;
-      ['dashboardToolbar','journalToolbar','beliefsToolbar','projectsToolbar','socialToolbar'].forEach(function(id){document.getElementById(id).classList.toggle('visible',admin)});
+      ['dashboardToolbar','journalToolbar','beliefsToolbar','projectsToolbar','gamesToolbar','socialToolbar'].forEach(function(id){document.getElementById(id).classList.toggle('visible',admin)});
       document.getElementById('editAboutBtn').classList.toggle('visible',admin);
       document.getElementById('adminLoginLink').style.display=admin?'none':'inline-flex';
       document.getElementById('adminLogoutLink').style.display=admin?'inline-flex':'none';
@@ -677,6 +670,44 @@
     async function saveSocial(){var icon=document.getElementById('socialIcon').value,name=document.getElementById('socialName').value.trim(),handle=document.getElementById('socialHandle').value.trim(),url=document.getElementById('socialUrl').value.trim();if(!name||!url){showErr('socialEditorError','Name and URL required.');return}try{if(editingId){var r=await supabaseClient.from('social_links').update({icon_key:icon,name:name,handle:handle,url:url}).eq('id',editingId);if(r.error)throw r.error;showToast('Link updated')}else{var ex=await supabaseClient.from('social_links').select('sort_order').order('sort_order',{ascending:false}).limit(1);var n=(ex.data&&ex.data.length)?ex.data[0].sort_order+1:1;var r=await supabaseClient.from('social_links').insert({icon_key:icon,name:name,handle:handle,url:url,sort_order:n,user_id:currentUser.id});if(r.error)throw r.error;showToast('Link added')}closeModal('socialEditorModal');loadSocials()}catch(e){showErr('socialEditorError',e.message||'Failed to save')}}
     async function deleteSocial(id){if(!confirm('Delete this link?'))return;try{var r=await supabaseClient.from('social_links').delete().eq('id',id);if(r.error)throw r.error;showToast('Deleted');loadSocials()}catch(e){showToast('Failed')}}
 
+    /* GAMES */
+    async function loadGames(){
+      var c=document.getElementById('gamesGrid');
+      if(!supabaseClient){renderGames(S_GAMES);return}
+      try{var r=await supabaseClient.from('games').select('*').order('sort_order',{ascending:true});if(r.error)throw r.error;renderGames(r.data&&r.data.length?r.data:[])}
+      catch(e){renderGames(S_GAMES)}
+    }
+    function renderGames(items){
+      var c=document.getElementById('gamesGrid');c.innerHTML='';
+      if(!items.length){c.innerHTML='<p style="color:var(--white-dim);font-size:0.85rem">no games yet.</p>';return}
+      items.forEach(function(g){
+        var tags=g.tags.split(',').map(function(t){return'<span class="tag">'+esc(t.trim())+'</span>'}).join('');
+        var ctrls=currentUser?'<div class="item-controls visible" style="width:100%;margin-top:var(--space-sm);border-top:1px solid var(--gray);padding-top:var(--space-sm)"><button class="btn btn-small" onclick="event.preventDefault();event.stopPropagation();openGameEditor(\''+g.id+'\')">edit</button><button class="btn btn-small btn-danger" onclick="event.preventDefault();event.stopPropagation();deleteGame(\''+g.id+'\')">delete</button></div>':'';
+        var a=document.createElement('a');
+        a.href=g.url;a.className='game-card reveal visible';a.target='_blank';a.rel='noopener';
+        a.innerHTML='<div class="game-card-icon">'+esc(g.icon)+'</div><div class="game-card-info"><h3>'+esc(g.title)+'</h3><p>'+esc(g.description)+'</p><div class="game-card-tags">'+tags+'</div></div><span class="game-card-arrow">\u2192</span>'+ctrls;
+        c.appendChild(a);
+      });
+    }
+    function openGameEditor(id){
+      editingId=id||null;editingType='game';
+      document.getElementById('gameEditorTitle').textContent=id?'Edit Game':'New Game';
+      document.getElementById('gameEditorSaveBtn').textContent=id?'Save Changes':'Save';
+      if(id){loadItemForEditing('games',id,function(d){document.getElementById('gameTitle').value=d.title;document.getElementById('gameIcon').value=d.icon;document.getElementById('gameDesc').value=d.description;document.getElementById('gameTags').value=d.tags;document.getElementById('gameUrl').value=d.url})}
+      else{document.getElementById('gameTitle').value='';document.getElementById('gameIcon').value='';document.getElementById('gameDesc').value='';document.getElementById('gameTags').value='';document.getElementById('gameUrl').value='games/'}
+      openModal('gameEditorModal');document.getElementById('gameTitle').focus();
+    }
+    async function saveGame(){
+      var title=document.getElementById('gameTitle').value.trim(),icon=document.getElementById('gameIcon').value.trim(),desc=document.getElementById('gameDesc').value.trim(),tags=document.getElementById('gameTags').value.trim(),url=document.getElementById('gameUrl').value.trim();
+      if(!title||!url){showErr('gameEditorError','Title and URL required.');return}
+      try{
+        if(editingId){var r=await supabaseClient.from('games').update({title:title,icon:icon,description:desc,tags:tags,url:url}).eq('id',editingId);if(r.error)throw r.error;showToast('Game updated')}
+        else{var ex=await supabaseClient.from('games').select('sort_order').order('sort_order',{ascending:false}).limit(1);var n=(ex.data&&ex.data.length)?ex.data[0].sort_order+1:1;var r=await supabaseClient.from('games').insert({title:title,icon:icon,description:desc,tags:tags,url:url,sort_order:n,user_id:currentUser.id});if(r.error)throw r.error;showToast('Game added')}
+        closeModal('gameEditorModal');loadGames();
+      }catch(e){showErr('gameEditorError',e.message||'Failed to save')}
+    }
+    async function deleteGame(id){if(!confirm('Delete this game?'))return;try{var r=await supabaseClient.from('games').delete().eq('id',id);if(r.error)throw r.error;showToast('Deleted');loadGames()}catch(e){showToast('Failed')}}
+
     /* GENERIC LOAD FOR EDITING */
     async function loadItemForEditing(table,id,cb){try{var r=await supabaseClient.from(table).select('*').eq('id',id).single();if(r.error)throw r.error;cb(r.data)}catch(e){showToast('Failed to load');closeModal(document.querySelector('.modal-overlay.visible').id)}}
 
@@ -693,7 +724,7 @@
     document.querySelectorAll('.nav-links a').forEach(function(l){l.addEventListener('click',function(){document.querySelector('.nav-links').classList.remove('open')})});
 
     /* LOAD ALL — blur settings loaded alongside everything else */
-    function loadAll(){loadSettings();loadBeliefs();loadTiles();loadProjects();loadEntries();loadSocials();loadBlurSettings()}
+    function loadAll(){loadSettings();loadBeliefs();loadTiles();loadProjects();loadGames();loadEntries();loadSocials();loadBlurSettings()}
 
     /* INIT */
     (async function(){await checkSession();loadAll()})();
