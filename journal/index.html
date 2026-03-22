@@ -523,7 +523,33 @@ function dbGet(store,key){return new Promise((res,rej)=>{const tx=db.transaction
 function dbGetAll(store){return new Promise((res,rej)=>{const tx=db.transaction(store,'readonly');const r=tx.objectStore(store).getAll();r.onsuccess=()=>res(r.result||[]);r.onerror=e=>rej(e.target.error)})}
 function dbDel(store,key){return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).delete(key);tx.oncomplete=()=>res();tx.onerror=e=>rej(e.target.error)})}
 function dbClear(store){return new Promise((res,rej)=>{const tx=db.transaction(store,'readwrite');tx.objectStore(store).clear();tx.oncomplete=()=>res();tx.onerror=e=>rej(e.target.error)})}
-function uid(){return Date.now().toString(36)+Math.random().toString(36).substr(2,6)}
+function uid(){return crypto.randomUUID?crypto.randomUUID():('10000000-1000-4000-8000-100000000000').replace(/[018]/g,function(c){return(c^crypto.getRandomValues(new Uint8Array(1))[0]&15>>c/4).toString(16)})}
+/* Convert non-UUID IDs to deterministic UUIDs — same input always = same output */
+function toUUID(id){
+  if(!id)return uid();
+  if(/^[0-9a-f]{8}-[0-9a-f]{4}-/.test(id))return id;
+  var hex='';for(var i=0;i<id.length;i++)hex+=id.charCodeAt(i).toString(16);
+  hex=hex.padEnd(32,'0').slice(0,32);
+  return hex.slice(0,8)+'-'+hex.slice(8,12)+'-4'+hex.slice(13,16)+'-a'+hex.slice(17,20)+'-'+hex.slice(20,32);
+}
+/* One-time migration: convert old base36 IDs to UUIDs */
+async function migrateOldIds(){
+  var didMigrate=await dbGet('settings','ids_migrated');
+  if(didMigrate)return;
+  var stores=['beliefs','tiles','projects','games','entries','resources','socials'];
+  for(var s of stores){
+    var items=await dbGetAll(s);
+    for(var item of items){
+      var newId=toUUID(item.id);
+      if(newId!==item.id){
+        await dbDel(s,item.id);
+        item.id=newId;
+        await dbPut(s,item);
+      }
+    }
+  }
+  await dbPut('settings',{key:'ids_migrated',value:true});
+}
 
 /* ============================================================
    SETTINGS HELPERS
@@ -1241,7 +1267,8 @@ async function exportData(){
   var settingsArr=await dbGetAll('settings');var settings={};
   settingsArr.forEach(function(s){settings[s.key]=s.value});
   var data={format:'malys-transfer-v1',exported_from:'app',exported_at:new Date().toISOString(),settings:settings,beliefs:await dbGetAll('beliefs'),tiles:await dbGetAll('tiles'),projects:await dbGetAll('projects'),games:await dbGetAll('games'),entries:await dbGetAll('entries'),resources:await dbGetAll('resources'),socials:await dbGetAll('socials')};
-  data._app_only={images:await dbGetAll('images'),svg_config:await dbGetAll('svg_config')};
+  data.svg_config=await dbGetAll('svg_config');
+  data._app_only={images:await dbGetAll('images')};
   var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
   var url=URL.createObjectURL(blob);var a=document.createElement('a');
   a.href=url;a.download='malys-journal-'+new Date().toISOString().slice(0,10)+'.json';
@@ -1255,7 +1282,8 @@ async function importData(e){
     if(data.settings){await dbClear('settings');if(Array.isArray(data.settings)){for(var s of data.settings)await dbPut('settings',s)}else{for(var k of Object.keys(data.settings))await dbPut('settings',{key:k,value:data.settings[k]})}}
     var mapping=[['beliefs','beliefs'],['tiles','tiles'],['dashboard_tiles','tiles'],['projects','projects'],['games','games'],['entries','entries'],['journal_entries','entries'],['resources','resources'],['socials','socials'],['social_links','socials']];
     var cleared={};
-    for(var m of mapping){if(data[m[0]]&&Array.isArray(data[m[0]])){if(!cleared[m[1]]){await dbClear(m[1]);cleared[m[1]]=true}for(var item of data[m[0]]){delete item.user_id;if(!item.id)item.id=uid();await dbPut(m[1],item)}}}
+    for(var m of mapping){if(data[m[0]]&&Array.isArray(data[m[0]])){if(!cleared[m[1]]){await dbClear(m[1]);cleared[m[1]]=true}for(var item of data[m[0]]){delete item.user_id;item.id=toUUID(item.id);await dbPut(m[1],item)}}}
+    if(data.svg_config&&Array.isArray(data.svg_config)){await dbClear('svg_config');for(var cfg of data.svg_config)await dbPut('svg_config',cfg)}
     if(data._app_only){if(data._app_only.images){await dbClear('images');for(var img of data._app_only.images)await dbPut('images',img)}if(data._app_only.svg_config){await dbClear('svg_config');for(var cfg of data._app_only.svg_config)await dbPut('svg_config',cfg)}}
     loadAll();showToast('Data imported');
   }catch(err){showToast('Import failed: '+err.message)}
@@ -1273,7 +1301,7 @@ async function mergeData(e){
       var current=await dbGetAll(storeName);var existing={};
       current.forEach(function(item){existing[item.id]=item});
       var added=0,updated=0;
-      for(var item of incoming){var copy=Object.assign({},item);delete copy.user_id;if(!copy.id)copy.id=uid();
+      for(var item of incoming){var copy=Object.assign({},item);delete copy.user_id;copy.id=toUUID(copy.id);
         if(!existing[copy.id]){await dbPut(storeName,copy);added++}
         else if(isNewer(copy,existing[copy.id])){var merged=Object.assign({},existing[copy.id],copy);await dbPut(storeName,merged);updated++}}
       return{added:added,updated:updated};
@@ -1281,7 +1309,8 @@ async function mergeData(e){
     var merges=[['beliefs','beliefs'],['tiles','tiles'],['dashboard_tiles','tiles'],['projects','projects'],['games','games'],['entries','entries'],['journal_entries','entries'],['resources','resources'],['socials','socials'],['social_links','socials']];
     var counts={added:0,updated:0};
     for(var m of merges){if(data[m[0]]&&Array.isArray(data[m[0]])){var r=await mergeStore(m[0],m[1]);counts.added+=r.added;counts.updated+=r.updated}}
-    if(data._app_only){if(data._app_only.images)for(var img of data._app_only.images)await dbPut('images',img);if(data._app_only.svg_config)for(var cfg of data._app_only.svg_config)await dbPut('svg_config',cfg)}
+    if(data.svg_config&&Array.isArray(data.svg_config))for(var cfg of data.svg_config)await dbPut('svg_config',cfg);
+    if(data._app_only){if(data._app_only.images)for(var img of data._app_only.images)await dbPut('images',img);if(data._app_only.svg_config)for(var cfg2 of data._app_only.svg_config)await dbPut('svg_config',cfg2)}
     loadAll();showToast('Merged: '+counts.added+' added, '+counts.updated+' updated');
   }catch(err){showToast('Merge failed: '+err.message)}
   e.target.value='';
@@ -1350,7 +1379,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
    INIT
    ============================================================ */
 function loadAll(){loadCardConfig().then(function(){window.cardConfig=cardConfig});loadTheme();refreshCardBackSvg();loadEntries();loadTiles();loadBeliefs();loadProjects();loadGames();loadResources();loadSocials();loadHero();loadAbout();loadFooter()}
-openDB().then(()=>loadAll()).catch(e=>console.error('DB error:',e));
+openDB().then(()=>migrateOldIds()).then(()=>loadAll()).catch(e=>console.error('DB error:',e));
 </script>
 </body>
 </html>
