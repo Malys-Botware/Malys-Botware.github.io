@@ -1,0 +1,18 @@
+<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+  <rect width="512" height="512" rx="96" fill="#0a0a0a"/>
+  <g transform="translate(106,80) scale(1.5)">
+    <path d="M100 20 C50 20,20 70,20 130 C20 180,30 220,40 260 L60 290 L140 290 L160 260 C170 220,180 180,180 130 C180 70,150 20,100 20Z" fill="#111" stroke="#1a1a1a" stroke-width="1"/>
+    <path d="M100 30 C58 30,32 75,32 128 C32 170,38 200,45 235 L65 275 L135 275 L155 235 C162 200,168 170,168 128 C168 75,142 30,100 30Z" fill="#050505"/>
+    <path d="M66 100 Q80 82,98 96" fill="none" stroke="#e50000" stroke-width="6" stroke-linecap="round"/>
+    <line x1="113" y1="88" x2="135" y2="110" stroke="#e50000" stroke-width="7" stroke-linecap="round"/>
+    <line x1="135" y1="88" x2="113" y2="110" stroke="#e50000" stroke-width="7" stroke-linecap="round"/>
+    <polygon points="58,126 66,144 74,126" fill="#e50000"/>
+    <polygon points="78,126 86,146 94,126" fill="#e50000"/>
+    <polygon points="98,125 106,146 114,125" fill="#e50000"/>
+    <polygon points="118,126 126,146 134,126" fill="#e50000"/>
+    <polygon points="66,148 74,130 82,148" fill="#e50000"/>
+    <polygon points="88,150 96,130 104,150" fill="#e50000"/>
+    <polygon points="110,150 118,130 126,150" fill="#e50000"/>
+    <polygon points="130,148 138,132 146,148" fill="#e50000"/>
+  </g>
+</svg>
