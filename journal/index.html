@@ -170,6 +170,29 @@
     /* Footer section */
     .footer-preview{text-align:center;padding:24px 0;border-top:1px solid var(--gray);margin-top:16px}
     .footer-preview p{font-size:0.75rem;color:var(--gray-light)}
+
+    /* Parts editor / character builder */
+    .parts-overlay{display:none;position:fixed;inset:0;z-index:260;background:var(--black);flex-direction:column}
+    .parts-overlay.visible{display:flex}
+    .parts-topbar{display:flex;align-items:center;justify-content:space-between;padding:8px 12px;border-bottom:1px solid var(--gray);flex-shrink:0;min-height:44px}
+    .parts-topbar-title{font-family:var(--font-heading);font-size:0.7rem;color:var(--red);letter-spacing:2px;text-transform:uppercase}
+    .parts-preview{flex-shrink:0;display:flex;align-items:center;justify-content:center;padding:12px;background:#080808;border-bottom:1px solid var(--gray);height:40vh;min-height:200px}
+    .parts-preview svg{max-height:100%;max-width:100%;filter:drop-shadow(0 0 20px rgba(229,0,0,0.15))}
+    .parts-controls{flex:1;overflow-y:auto;padding:12px;-webkit-overflow-scrolling:touch;padding-bottom:calc(12px + var(--safe-b))}
+    .parts-list{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--gray)}
+    .part-chip{font-family:var(--font-heading);font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;padding:5px 10px;border:1px solid var(--gray);background:var(--black);color:var(--white-dim);cursor:pointer;transition:all 0.15s}
+    .part-chip.active{border-color:var(--red);color:var(--red);background:rgba(153,17,17,0.15)}
+    .part-chip.hidden-part{opacity:0.4;text-decoration:line-through}
+    .part-sliders{display:grid;gap:10px}
+    .part-slider-row{display:flex;align-items:center;gap:8px}
+    .part-slider-row label{font-family:var(--font-heading);font-size:0.55rem;letter-spacing:1px;text-transform:uppercase;color:var(--white-dim);width:55px;flex-shrink:0}
+    .part-slider-row input[type="range"]{flex:1;accent-color:var(--red);height:24px;background:transparent}
+    .part-slider-row .slider-val{font-family:var(--font-heading);font-size:0.6rem;color:var(--white);width:36px;text-align:right;flex-shrink:0}
+    .part-slider-row input[type="color"]{width:36px;height:28px;border:1px solid var(--gray);padding:1px;cursor:pointer;background:none;flex-shrink:0}
+    .part-actions{display:flex;gap:6px;margin-top:12px;padding-top:10px;border-top:1px solid var(--gray);flex-wrap:wrap}
+    .parts-add-bar{margin-top:12px;padding-top:10px;border-top:1px solid var(--gray)}
+    .parts-add-bar summary{font-family:var(--font-heading);font-size:0.6rem;letter-spacing:1px;text-transform:uppercase;color:var(--white-dim);cursor:pointer;margin-bottom:8px}
+    .shape-chips{display:flex;gap:4px;flex-wrap:wrap}
   </style>
 </head>
 <body>
@@ -204,7 +227,7 @@
   <button class="btn btn-full" onclick="openEditor('hero')" style="margin-bottom:8px">edit hero text</button>
   <div class="studio-tools">
     <button class="btn" onclick="openPaint()">🎨 Paint Editor</button>
-    <button class="btn" onclick="openSvgEditor()">✏️ SVG Editor</button>
+    <button class="btn" onclick="openPartsEditor()">✏️ Mascot Editor</button>
   </div>
   <div style="margin-top:24px">
     <div class="panel-header">About</div>
@@ -381,6 +404,35 @@
 </div>
 
 <div class="toast" id="toast"></div>
+
+<!-- MASCOT PARTS EDITOR -->
+<div class="parts-overlay" id="partsOverlay">
+  <div class="parts-topbar">
+    <button class="btn" onclick="closePartsEditor()">← back</button>
+    <span class="parts-topbar-title">Mascot Builder</span>
+    <div style="display:flex;gap:6px">
+      <button class="btn" onclick="resetMascotParts()">reset</button>
+      <button class="btn btn-primary" onclick="saveMascotParts()">save</button>
+    </div>
+  </div>
+  <div class="parts-preview" id="partsPreview"></div>
+  <div class="parts-controls">
+    <div class="parts-list" id="partsList"></div>
+    <div class="part-sliders" id="partSliders"></div>
+    <div class="parts-add-bar">
+      <details>
+        <summary>+ add new shape</summary>
+        <div class="shape-chips" style="margin-top:8px">
+          <button class="btn" style="font-size:0.55rem" onclick="addNewPart('circle')">⬤ circle</button>
+          <button class="btn" style="font-size:0.55rem" onclick="addNewPart('rect')">▬ rectangle</button>
+          <button class="btn" style="font-size:0.55rem" onclick="addNewPart('triangle')">▲ triangle</button>
+          <button class="btn" style="font-size:0.55rem" onclick="addNewPart('line')">╱ line</button>
+          <button class="btn" style="font-size:0.55rem" onclick="addNewPart('arc')">◠ arc</button>
+        </div>
+      </details>
+    </div>
+  </div>
+</div>
 
 <script>
 /* ============================================================
@@ -700,7 +752,7 @@ async function loadHero(){
   /* Check for canvas painting */
   const img=await dbGet('images','hero_painting');
   if(img&&img.data){document.getElementById('heroCanvasPreview').style.display='block';document.getElementById('heroCanvasImg').src=img.data;document.getElementById('heroSvgPreview').style.display='none'}
-  else{document.getElementById('heroCanvasPreview').style.display='none';document.getElementById('heroSvgPreview').style.display='block';const cfg=await dbGet('svg_config','mascot');document.getElementById('heroSvgPreview').innerHTML=buildMascotSvg(cfg)}
+  else{document.getElementById('heroCanvasPreview').style.display='none';document.getElementById('heroSvgPreview').style.display='block';const partsCfg=await dbGet('svg_config','mascot_parts');if(partsCfg&&partsCfg.parts){document.getElementById('heroSvgPreview').innerHTML=buildMascotSvgFromParts(partsCfg.parts)}else{const cfg=await dbGet('svg_config','mascot');document.getElementById('heroSvgPreview').innerHTML=buildMascotSvg(cfg)}}
 }
 async function loadAbout(){const v=await getSetting('about_intro','');document.getElementById('aboutText').innerHTML=v?textToHtml(v):'<p class="empty-msg">no about text yet.</p>'}
 async function loadFooter(){
@@ -740,6 +792,141 @@ function resetSvg(){
   updateSvgPreview();
 }
 /* Redirect handled directly in HTML onclick */
+
+/* ============================================================
+   MASCOT PARTS EDITOR — Character Builder
+   ============================================================ */
+const DEFAULT_MASCOT_PARTS=[
+  {id:'cloak_outer',name:'Cloak Outer',type:'path',d:'M100 20 C50 20,20 70,20 130 C20 180,30 220,40 260 L60 290 L140 290 L160 260 C170 220,180 180,180 130 C180 70,150 20,100 20Z',fill:'#0a0a0a',stroke:'#1a1a1a',strokeWidth:1,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'cloak_inner',name:'Cloak Inner',type:'path',d:'M100 30 C58 30,32 75,32 128 C32 170,38 200,45 235 L65 275 L135 275 L155 235 C162 200,168 170,168 128 C168 75,142 30,100 30Z',fill:'#050505',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'eye_left',name:'Left Eye',type:'path',d:'M66 100 Q80 82,98 96',fill:'none',stroke:'#e50000',strokeWidth:6,x:0,y:0,scale:100,rotation:0,visible:true,strokeLinecap:'round'},
+  {id:'eye_right_1',name:'Right Eye ╲',type:'line',x1:113,y1:88,x2:135,y2:110,fill:'none',stroke:'#e50000',strokeWidth:7,x:0,y:0,scale:100,rotation:0,visible:true,strokeLinecap:'round'},
+  {id:'eye_right_2',name:'Right Eye ╱',type:'line',x1:135,y1:88,x2:113,y2:110,fill:'none',stroke:'#e50000',strokeWidth:7,x:0,y:0,scale:100,rotation:0,visible:true,strokeLinecap:'round'},
+  {id:'teeth_u1',name:'Tooth U1',type:'polygon',points:'58,126 66,144 74,126',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'teeth_u2',name:'Tooth U2',type:'polygon',points:'78,126 86,146 94,126',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'teeth_u3',name:'Tooth U3',type:'polygon',points:'98,125 106,146 114,125',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'teeth_u4',name:'Tooth U4',type:'polygon',points:'118,126 126,146 134,126',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'teeth_l1',name:'Tooth L1',type:'polygon',points:'66,148 74,130 82,148',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'teeth_l2',name:'Tooth L2',type:'polygon',points:'88,150 96,130 104,150',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'teeth_l3',name:'Tooth L3',type:'polygon',points:'110,150 118,130 126,150',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'teeth_l4',name:'Tooth L4',type:'polygon',points:'130,148 138,132 146,148',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true},
+  {id:'wisp_left',name:'Left Wisp',type:'path',d:'M35 220 Q20 215,18 200 Q16 210,22 222 Q15 218,12 205 Q12 215,20 228 L35 235Z',fill:'#1a1a1a',stroke:'#e50000',strokeWidth:0.5,x:0,y:0,scale:100,rotation:0,visible:true,opacity:0.6},
+  {id:'wisp_right',name:'Right Wisp',type:'path',d:'M165 220 Q180 215,182 200 Q184 210,178 222 Q185 218,188 205 Q188 215,180 228 L165 235Z',fill:'#1a1a1a',stroke:'#e50000',strokeWidth:0.5,x:0,y:0,scale:100,rotation:0,visible:true,opacity:0.6},
+  {id:'hem',name:'Hem',type:'path',d:'M60 290 L65 280 L75 290 L85 278 L95 290 L105 278 L115 290 L125 278 L135 290 L140 280 L140 290Z',fill:'#0a0a0a',stroke:'#1a1a1a',strokeWidth:0.5,x:0,y:0,scale:100,rotation:0,visible:true}
+];
+let mascotParts=[],selectedPartId=null;
+
+async function openPartsEditor(){
+  const saved=await dbGet('svg_config','mascot_parts');
+  mascotParts=saved&&saved.parts?JSON.parse(JSON.stringify(saved.parts)):JSON.parse(JSON.stringify(DEFAULT_MASCOT_PARTS));
+  selectedPartId=mascotParts[0].id;
+  document.getElementById('partsOverlay').classList.add('visible');
+  renderPartsUI();
+}
+function closePartsEditor(){document.getElementById('partsOverlay').classList.remove('visible')}
+
+async function saveMascotParts(){
+  await dbPut('svg_config',{id:'mascot_parts',parts:mascotParts});
+  closePartsEditor();loadHero();showToast('Mascot saved');
+}
+function resetMascotParts(){
+  if(!confirm('Reset mascot to defaults?'))return;
+  mascotParts=JSON.parse(JSON.stringify(DEFAULT_MASCOT_PARTS));
+  selectedPartId=mascotParts[0].id;renderPartsUI();showToast('Reset');
+}
+
+function buildPartSvg(p){
+  if(!p.visible)return'';
+  var cx=100,cy=150,s=(p.scale||100)/100;
+  var tx=p.x||0,ty=p.y||0,rot=p.rotation||0;
+  var tf='translate('+tx+','+ty+') rotate('+rot+','+cx+','+cy+') scale('+s+')';
+  var op=p.opacity!==undefined?' opacity="'+p.opacity+'"':'';
+  var lc=p.strokeLinecap?' stroke-linecap="'+p.strokeLinecap+'"':'';
+  var fl=p.fill&&p.fill!=='none'?' fill="'+p.fill+'"':' fill="none"';
+  var st=p.stroke&&p.stroke!=='none'?' stroke="'+p.stroke+'" stroke-width="'+(p.strokeWidth||0)+'"':'';
+  var g='<g transform="'+tf+'"'+op+'>';
+  if(p.type==='path')return g+'<path d="'+p.d+'"'+fl+st+lc+'/></g>';
+  if(p.type==='line')return g+'<line x1="'+p.x1+'" y1="'+p.y1+'" x2="'+p.x2+'" y2="'+p.y2+'"'+st+lc+'/></g>';
+  if(p.type==='polygon')return g+'<polygon points="'+p.points+'"'+fl+st+'/></g>';
+  if(p.type==='circle')return g+'<circle cx="'+(p.cx||100)+'" cy="'+(p.cy||100)+'" r="'+(p.r||10)+'"'+fl+st+'/></g>';
+  if(p.type==='rect')return g+'<rect x="'+(p.rx||80)+'" y="'+(p.ry||80)+'" width="'+(p.rw||40)+'" height="'+(p.rh||40)+'"'+fl+st+'/></g>';
+  return'';
+}
+function buildMascotSvgFromParts(parts){
+  return'<svg viewBox="0 0 200 300" xmlns="http://www.w3.org/2000/svg">'+(parts||[]).map(buildPartSvg).join('')+'</svg>';
+}
+function renderPartsPreview(){document.getElementById('partsPreview').innerHTML=buildMascotSvgFromParts(mascotParts)}
+function renderPartsUI(){renderPartsPreview();renderPartChips();renderPartSliders()}
+function renderPartChips(){
+  document.getElementById('partsList').innerHTML=mascotParts.map(function(p){
+    return'<button class="part-chip'+(p.id===selectedPartId?' active':'')+(!p.visible?' hidden-part':'')+'" onclick="selectPart(\''+p.id+'\')">'+esc(p.name)+'</button>';
+  }).join('');
+}
+function selectPart(id){selectedPartId=id;renderPartChips();renderPartSliders()}
+function renderPartSliders(){
+  var el=document.getElementById('partSliders');
+  var p=mascotParts.find(function(pt){return pt.id===selectedPartId});
+  if(!p){el.innerHTML='';return}
+  var h='';
+  h+='<div class="part-slider-row"><label>Visible</label><button class="btn" style="font-size:0.55rem;flex:1" onclick="togglePartVis(\''+p.id+'\')">'+(p.visible?'👁 visible':'🚫 hidden')+'</button></div>';
+  h+=sliderRow('Move X','x',p.x||0,-80,80);
+  h+=sliderRow('Move Y','y',p.y||0,-80,80);
+  h+=sliderRow('Scale','scale',p.scale||100,20,200);
+  h+=sliderRow('Rotate','rotation',p.rotation||0,-180,180);
+  h+=sliderRow('Stroke','strokeWidth',p.strokeWidth||0,0,20);
+  h+=sliderRow('Opacity','opacity',Math.round((p.opacity!==undefined?p.opacity:1)*100),0,100);
+  if(p.fill&&p.fill!=='none')h+='<div class="part-slider-row"><label>Fill</label><input type="color" value="'+p.fill+'" oninput="updatePartColor(\''+p.id+'\',\'fill\',this.value)"><div class="slider-val" style="font-size:0.5rem">'+p.fill+'</div></div>';
+  if(p.stroke&&p.stroke!=='none')h+='<div class="part-slider-row"><label>Line</label><input type="color" value="'+p.stroke+'" oninput="updatePartColor(\''+p.id+'\',\'stroke\',this.value)"><div class="slider-val" style="font-size:0.5rem">'+p.stroke+'</div></div>';
+  h+='<div class="part-actions">';
+  h+='<button class="btn" style="font-size:0.5rem" onclick="movePartLayer(\''+p.id+'\',-1)">↓ back</button>';
+  h+='<button class="btn" style="font-size:0.5rem" onclick="movePartLayer(\''+p.id+'\',1)">↑ front</button>';
+  h+='<button class="btn" style="font-size:0.5rem" onclick="duplicatePart(\''+p.id+'\')">⧉ dupe</button>';
+  if(p.id.startsWith('custom_'))h+='<button class="btn btn-danger" style="font-size:0.5rem" onclick="deletePart(\''+p.id+'\')">✕ delete</button>';
+  h+='</div>';
+  el.innerHTML=h;
+}
+function sliderRow(label,prop,value,min,max){
+  return'<div class="part-slider-row"><label>'+label+'</label><input type="range" min="'+min+'" max="'+max+'" value="'+value+'" oninput="updatePartProp(\''+selectedPartId+'\',\''+prop+'\',this.value)"><div class="slider-val">'+value+'</div></div>';
+}
+function updatePartProp(id,prop,value){
+  var p=mascotParts.find(function(pt){return pt.id===id});if(!p)return;
+  p[prop]=prop==='opacity'?parseFloat(value)/100:parseFloat(value);
+  renderPartsPreview();renderPartSliders();
+}
+function updatePartColor(id,prop,value){
+  var p=mascotParts.find(function(pt){return pt.id===id});if(!p)return;
+  p[prop]=value;renderPartsPreview();renderPartSliders();
+}
+function togglePartVis(id){
+  var p=mascotParts.find(function(pt){return pt.id===id});if(!p)return;
+  p.visible=!p.visible;renderPartsUI();
+}
+function movePartLayer(id,dir){
+  var idx=mascotParts.findIndex(function(p){return p.id===id});if(idx<0)return;
+  var ni=idx+dir;if(ni<0||ni>=mascotParts.length)return;
+  var tmp=mascotParts[idx];mascotParts[idx]=mascotParts[ni];mascotParts[ni]=tmp;renderPartsUI();
+}
+function duplicatePart(id){
+  var p=mascotParts.find(function(pt){return pt.id===id});if(!p)return;
+  var c=JSON.parse(JSON.stringify(p));
+  c.id='custom_'+Date.now().toString(36);c.name=p.name+' copy';c.x=(c.x||0)+5;c.y=(c.y||0)+5;
+  mascotParts.splice(mascotParts.indexOf(p)+1,0,c);selectedPartId=c.id;renderPartsUI();
+}
+function deletePart(id){
+  if(!confirm('Delete this shape?'))return;
+  mascotParts=mascotParts.filter(function(p){return p.id!==id});
+  if(selectedPartId===id)selectedPartId=mascotParts.length?mascotParts[0].id:null;
+  renderPartsUI();
+}
+function addNewPart(shape){
+  var id='custom_'+Date.now().toString(36),part;
+  if(shape==='circle')part={id:id,name:'Circle',type:'circle',cx:100,cy:150,r:15,fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true};
+  else if(shape==='rect')part={id:id,name:'Rectangle',type:'rect',rx:80,ry:130,rw:40,rh:30,fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true};
+  else if(shape==='triangle')part={id:id,name:'Triangle',type:'polygon',points:'90,120 100,100 110,120',fill:'#e50000',stroke:'none',strokeWidth:0,x:0,y:0,scale:100,rotation:0,visible:true};
+  else if(shape==='line')part={id:id,name:'Line',type:'line',x1:80,y1:150,x2:120,y2:150,fill:'none',stroke:'#e50000',strokeWidth:4,x:0,y:0,scale:100,rotation:0,visible:true,strokeLinecap:'round'};
+  else if(shape==='arc')part={id:id,name:'Arc',type:'path',d:'M80 160 Q100 140,120 160',fill:'none',stroke:'#e50000',strokeWidth:4,x:0,y:0,scale:100,rotation:0,visible:true,strokeLinecap:'round'};
+  if(part){mascotParts.push(part);selectedPartId=id;renderPartsUI();showToast('Shape added')}
+}
 
 /* ============================================================
    PAINT EDITOR
