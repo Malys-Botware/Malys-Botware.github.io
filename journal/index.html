@@ -247,6 +247,140 @@
     .sol-play-card .sol-play-info{flex:1}
     .sol-play-card .sol-play-info h3{font-family:var(--font-heading);font-size:0.85rem;font-weight:700;color:var(--white);margin-bottom:4px}
     .sol-play-card .sol-play-info p{font-size:0.75rem;color:var(--white-dim)}
+
+    /* ============================================================
+       PRODUCTIVITY TAB
+       ============================================================ */
+    .prod-sub-nav{display:flex;gap:4px;margin-bottom:12px;overflow-x:auto;padding-bottom:6px;-webkit-overflow-scrolling:touch}
+    .prod-sub-nav::-webkit-scrollbar{display:none}
+    .prod-sub-btn{font-family:var(--font-heading);font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--gray);background:var(--black);color:var(--white-dim);padding:6px 10px;cursor:pointer;white-space:nowrap;transition:all 0.2s}
+    .prod-sub-btn.active{border-color:var(--red);color:var(--red);background:rgba(153,17,17,0.15)}
+    .prod-content{display:none}.prod-content.active{display:block}
+
+    /* Calendar */
+    .cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px}
+    .cal-header-title{font-family:var(--font-heading);font-size:0.85rem;font-weight:700;color:var(--white);letter-spacing:1px}
+    .cal-nav-btn{background:none;border:1px solid var(--gray);color:var(--white-dim);font-size:1rem;width:32px;height:32px;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all 0.15s}
+    .cal-nav-btn:active{border-color:var(--red);color:var(--red)}
+    .cal-toggle{font-family:var(--font-heading);font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--gray);background:var(--black);color:var(--white-dim);padding:4px 8px;cursor:pointer}
+    .cal-toggle:active{border-color:var(--red);color:var(--red)}
+    .cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:1px;margin-bottom:12px}
+    .cal-dow{font-family:var(--font-heading);font-size:0.45rem;letter-spacing:1px;text-transform:uppercase;color:var(--white-dim);text-align:center;padding:6px 0}
+    .cal-day{background:var(--black-card);border:1px solid transparent;text-align:center;padding:8px 2px;cursor:pointer;min-height:42px;position:relative;transition:all 0.15s}
+    .cal-day:active{border-color:var(--red-dim)}
+    .cal-day.other-month{opacity:0.3}
+    .cal-day.today{border-color:var(--red);background:rgba(153,17,17,0.1)}
+    .cal-day.selected{border-color:var(--red);background:rgba(153,17,17,0.2)}
+    .cal-day-num{font-family:var(--font-heading);font-size:0.7rem;color:var(--white)}
+    .cal-dots{display:flex;gap:2px;justify-content:center;margin-top:3px;min-height:6px}
+    .cal-dot{width:5px;height:5px;border-radius:50%}
+    /* Weekly view */
+    .cal-week-day{padding:10px;border-bottom:1px solid var(--gray);cursor:pointer;transition:background 0.15s}
+    .cal-week-day:active{background:rgba(153,17,17,0.1)}
+    .cal-week-day.today{border-left:3px solid var(--red)}
+    .cal-week-day-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:4px}
+    .cal-week-day-name{font-family:var(--font-heading);font-size:0.65rem;letter-spacing:1px;text-transform:uppercase;color:var(--white-dim)}
+    .cal-week-day-date{font-family:var(--font-heading);font-size:0.7rem;font-weight:700;color:var(--white)}
+    .cal-event-pill{font-size:0.65rem;color:var(--white);padding:3px 8px;margin-top:3px;border-left:3px solid var(--red);background:var(--black-card)}
+    .cal-event-pill .ev-time{color:var(--white-dim);font-size:0.55rem;margin-left:6px}
+
+    /* Events list */
+    .events-day-title{font-family:var(--font-heading);font-size:0.7rem;letter-spacing:2px;text-transform:uppercase;color:var(--red);margin:16px 0 8px;padding-bottom:4px;border-bottom:1px solid var(--gray)}
+    .event-card{background:var(--black-card);border:1px solid var(--gray);border-left:4px solid var(--red);padding:10px 12px;margin-bottom:8px}
+    .event-card h4{font-family:var(--font-heading);font-size:0.75rem;font-weight:700;color:var(--white);margin-bottom:2px}
+    .event-card .ev-meta{font-size:0.65rem;color:var(--white-dim)}
+
+    /* Stopwatch + Timer */
+    .sw-display{font-family:var(--font-heading);font-size:2.5rem;font-weight:700;color:var(--white);text-align:center;padding:32px 0;letter-spacing:4px}
+    .sw-ms{font-size:1rem;color:var(--white-dim)}
+    .sw-buttons{display:flex;gap:8px;justify-content:center;margin-bottom:16px}
+    .sw-laps{max-height:200px;overflow-y:auto}
+    .sw-lap{display:flex;justify-content:space-between;padding:6px 0;border-bottom:1px solid var(--gray);font-size:0.75rem;color:var(--white-dim)}
+    .timer-input-row{display:flex;gap:8px;justify-content:center;align-items:center;margin-bottom:16px}
+    .timer-input{width:60px;text-align:center;background:var(--black);border:1px solid var(--gray);color:var(--white);font-family:var(--font-heading);font-size:1.2rem;padding:8px}
+    .timer-label{font-family:var(--font-heading);font-size:0.55rem;color:var(--white-dim);letter-spacing:1px;text-transform:uppercase}
+    .timer-display{font-family:var(--font-heading);font-size:3rem;font-weight:700;text-align:center;padding:24px 0;letter-spacing:4px}
+    .timer-done{color:var(--red);animation:pulse 0.5s infinite}
+
+    /* Calculator */
+    .calc-display{background:var(--black);border:1px solid var(--gray);padding:16px;text-align:right;font-family:var(--font-heading);font-size:1.8rem;color:var(--white);margin-bottom:8px;min-height:60px;overflow:hidden;word-break:break-all}
+    .calc-expr{font-size:0.7rem;color:var(--white-dim);min-height:18px}
+    .calc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:4px}
+    .calc-btn{font-family:var(--font-heading);font-size:0.9rem;padding:14px;border:1px solid var(--gray);background:var(--black-card);color:var(--white);cursor:pointer;text-align:center;transition:all 0.1s;touch-action:manipulation}
+    .calc-btn:active{background:var(--gray);transform:scale(0.95)}
+    .calc-btn.op{color:var(--red);border-color:var(--red-dim)}
+    .calc-btn.eq{background:var(--red-dim);color:var(--white);border-color:var(--red-dim)}
+    .calc-btn.eq:active{background:var(--red)}
+    .calc-btn.wide{grid-column:span 2}
+    /* Unit Converter */
+    .conv-cats{display:flex;gap:3px;flex-wrap:wrap;margin-bottom:12px}
+    .conv-cat{font-family:var(--font-heading);font-size:0.45rem;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--gray);background:var(--black);color:var(--white-dim);padding:5px 8px;cursor:pointer;transition:all 0.15s}
+    .conv-cat.active{border-color:var(--red);color:var(--red);background:rgba(153,17,17,0.15)}
+    .conv-row{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+    .conv-row input{flex:1;background:var(--black);border:1px solid var(--gray);color:var(--white);font-family:var(--font-heading);font-size:0.9rem;padding:10px;text-align:right}
+    .conv-row input:focus{border-color:var(--red-dim);outline:none}
+    .conv-row select{background:var(--black);border:1px solid var(--gray);color:var(--white-dim);font-family:var(--font-heading);font-size:0.55rem;padding:8px 4px;letter-spacing:1px;cursor:pointer;min-width:60px}
+    .conv-row .conv-eq{color:var(--red);font-family:var(--font-heading);font-size:1rem;flex-shrink:0}
+    .conv-result{font-family:var(--font-heading);font-size:1.4rem;color:var(--white);text-align:center;padding:12px;border:1px solid var(--gray);background:var(--black-card);margin-bottom:12px}
+    .conv-ref{font-size:0.65rem;color:var(--white-dim);margin-top:8px;line-height:1.8}
+    .conv-ref strong{color:var(--white);font-weight:500}
+
+    /* Jobs / Quotes */
+    .job-card{background:var(--black-card);border:1px solid var(--gray);border-left:4px solid var(--red);padding:14px;margin-bottom:10px}
+    .job-card h4{font-family:var(--font-heading);font-size:0.8rem;font-weight:700;color:var(--white);margin-bottom:2px}
+    .job-card .job-client{font-size:0.7rem;color:var(--white-dim)}
+    .job-card .job-total{font-family:var(--font-heading);font-size:0.9rem;color:var(--red);margin-top:6px}
+    .job-status{display:inline-block;font-family:var(--font-heading);font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;padding:2px 6px;margin-left:6px}
+    .job-status.quote{color:var(--white);background:var(--gray)}
+    .job-status.active{color:#22c55e;border:1px solid #166534}
+    .job-status.complete{color:var(--white-dim);background:var(--gray);text-decoration:line-through}
+    .line-items-table{width:100%;margin:8px 0;border-collapse:collapse}
+    .line-items-table th{font-family:var(--font-heading);font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;color:var(--white-dim);text-align:left;padding:4px 6px;border-bottom:1px solid var(--gray)}
+    .line-items-table td{font-size:0.75rem;color:var(--white);padding:4px 6px;border-bottom:1px solid rgba(51,51,51,0.5)}
+    .line-items-table .li-total{text-align:right;color:var(--red);font-family:var(--font-heading)}
+    .line-items-table .li-del{cursor:pointer;color:var(--white-dim);font-size:0.65rem}
+    .line-items-table .li-del:active{color:var(--red)}
+    .job-photos{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0}
+    .job-photos img{width:60px;height:60px;object-fit:cover;border:1px solid var(--gray);border-radius:2px;cursor:pointer}
+
+    /* Paint Tool */
+    .paint-overlay{display:none;position:fixed;inset:0;z-index:270;background:var(--black);flex-direction:column;touch-action:none}
+    .paint-overlay.visible{display:flex}
+    .paint-topbar{display:flex;align-items:center;justify-content:space-between;padding:6px 10px;border-bottom:1px solid var(--gray);flex-shrink:0;min-height:40px;gap:4px}
+    .paint-topbar .btn{font-size:0.5rem;padding:4px 8px}
+    .paint-canvas-wrap{flex:1;position:relative;overflow:hidden;background:#111;display:flex;align-items:center;justify-content:center}
+    .paint-canvas-wrap canvas{touch-action:none;cursor:crosshair}
+    .paint-toolbar{display:flex;flex-direction:column;gap:6px;padding:8px 10px;border-top:1px solid var(--gray);flex-shrink:0;background:var(--black)}
+    .paint-tools-row{display:flex;gap:4px;align-items:center;flex-wrap:wrap}
+    .paint-tool{width:34px;height:34px;display:flex;align-items:center;justify-content:center;border:1px solid var(--gray);background:var(--black-card);color:var(--white-dim);cursor:pointer;font-size:0.75rem;transition:all 0.1s;flex-shrink:0}
+    .paint-tool.active{border-color:var(--red);color:var(--red);background:rgba(153,17,17,0.15)}
+    .paint-tool:active{transform:scale(0.9)}
+    .paint-slider-row{display:flex;align-items:center;gap:6px;flex:1;min-width:0}
+    .paint-slider-row label{font-family:var(--font-heading);font-size:0.45rem;letter-spacing:1px;text-transform:uppercase;color:var(--white-dim);flex-shrink:0;width:28px}
+    .paint-slider-row input[type="range"]{flex:1;height:28px}
+    .paint-slider-row .paint-val{font-family:var(--font-heading);font-size:0.55rem;color:var(--white);width:24px;text-align:right;flex-shrink:0}
+    .paint-color-btn{width:28px;height:28px;border:2px solid var(--gray);cursor:pointer;flex-shrink:0;padding:0}
+    .paint-color-btn:active{border-color:var(--white)}
+    .paint-colors{display:flex;gap:3px;flex-wrap:wrap}
+    .paint-swatch{width:22px;height:22px;border:1px solid var(--gray);cursor:pointer}
+    .paint-swatch.active{border:2px solid var(--white)}
+    .paint-swatch:active{transform:scale(0.9)}
+    /* Layers panel */
+    .paint-layers-panel{display:none;position:absolute;bottom:0;right:0;width:180px;max-height:50%;background:var(--black-light);border:1px solid var(--gray);border-right:none;border-bottom:none;z-index:5;overflow-y:auto}
+    .paint-layers-panel.visible{display:block}
+    .paint-layers-header{display:flex;justify-content:space-between;align-items:center;padding:6px 8px;border-bottom:1px solid var(--gray)}
+    .paint-layers-header span{font-family:var(--font-heading);font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;color:var(--red)}
+    .paint-layer-item{display:flex;align-items:center;gap:4px;padding:5px 8px;border-bottom:1px solid rgba(51,51,51,0.5);cursor:pointer;font-size:0.6rem;color:var(--white-dim)}
+    .paint-layer-item.active{background:rgba(153,17,17,0.15);color:var(--white)}
+    .paint-layer-item .layer-vis{cursor:pointer;font-size:0.7rem}
+    .paint-layer-item .layer-name{flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;font-family:var(--font-heading);letter-spacing:1px}
+    .paint-layer-item .layer-del{cursor:pointer;color:var(--white-dim);font-size:0.6rem}
+    .paint-layer-item .layer-del:active{color:var(--red)}
+    /* Journal entry calendar button */
+    .entry-cal-btn{font-family:var(--font-heading);font-size:0.5rem;letter-spacing:1px;text-transform:uppercase;border:1px solid var(--green-dim);background:var(--black);color:var(--green);padding:4px 8px;cursor:pointer}
+    .entry-cal-btn:active{background:var(--green-dim);color:var(--white)}
+    .job-grand-total{font-family:var(--font-heading);font-size:1.1rem;color:var(--red);text-align:right;padding:8px 0;border-top:2px solid var(--red-dim);margin-top:8px}
+
   </style>
 </head>
 <body>
@@ -271,6 +405,116 @@
   <div id="tilesList"></div>
 </div>
 
+
+<!-- PRODUCTIVITY -->
+<div class="panel" id="panelProductivity">
+  <div class="panel-header">Productivity</div>
+  <div class="prod-sub-nav">
+    <button class="prod-sub-btn active" onclick="showProd('calendar',event)">Calendar</button>
+    <button class="prod-sub-btn" onclick="showProd('stopwatch',event)">Stopwatch</button>
+    <button class="prod-sub-btn" onclick="showProd('timer',event)">Timer</button>
+    <button class="prod-sub-btn" onclick="showProd('calc',event)">Calculator</button>
+    <button class="prod-sub-btn" onclick="showProd('converter',event)">Converter</button>
+    <button class="prod-sub-btn" onclick="showProd('jobs',event)">Jobs</button>
+  </div>
+
+  <!-- CALENDAR -->
+  <div class="prod-content active" id="prodCalendar">
+    <div class="cal-header">
+      <button class="cal-nav-btn" onclick="calNav(-1)">‹</button>
+      <div style="display:flex;align-items:center;gap:8px">
+        <span class="cal-header-title" id="calTitle"></span>
+        <button class="cal-toggle" id="calToggle" onclick="toggleCalView()">week</button>
+      </div>
+      <button class="cal-nav-btn" onclick="calNav(1)">›</button>
+    </div>
+    <div id="calBody"></div>
+    <div style="margin:12px 0"><button class="btn btn-primary btn-full" onclick="openEventEditor()">+ add event</button></div>
+    <div id="calEvents"></div>
+  </div>
+
+  <!-- STOPWATCH -->
+  <div class="prod-content" id="prodStopwatch">
+    <div class="sw-display"><span id="swTime">0:00.00</span></div>
+    <div class="sw-buttons">
+      <button class="btn btn-primary" id="swStartBtn" onclick="swToggle()">start</button>
+      <button class="btn" onclick="swLap()">lap</button>
+      <button class="btn btn-danger" onclick="swReset()">reset</button>
+    </div>
+    <div class="sw-laps" id="swLaps"></div>
+  </div>
+
+  <!-- TIMER -->
+  <div class="prod-content" id="prodTimer">
+    <div id="timerSetup">
+      <div class="timer-input-row">
+        <div style="text-align:center"><input class="timer-input" id="timerH" type="number" value="0" min="0" max="23"><div class="timer-label">hours</div></div>
+        <span style="font-size:1.5rem;color:var(--white-dim)">:</span>
+        <div style="text-align:center"><input class="timer-input" id="timerM" type="number" value="5" min="0" max="59"><div class="timer-label">min</div></div>
+        <span style="font-size:1.5rem;color:var(--white-dim)">:</span>
+        <div style="text-align:center"><input class="timer-input" id="timerS" type="number" value="0" min="0" max="59"><div class="timer-label">sec</div></div>
+      </div>
+      <div class="sw-buttons">
+        <button class="btn btn-primary" onclick="timerStart()">start</button>
+      </div>
+      <div style="display:flex;gap:4px;flex-wrap:wrap;justify-content:center;margin-top:8px">
+        <button class="btn" onclick="timerQuick(1)">1m</button>
+        <button class="btn" onclick="timerQuick(3)">3m</button>
+        <button class="btn" onclick="timerQuick(5)">5m</button>
+        <button class="btn" onclick="timerQuick(10)">10m</button>
+        <button class="btn" onclick="timerQuick(15)">15m</button>
+        <button class="btn" onclick="timerQuick(25)">25m</button>
+        <button class="btn" onclick="timerQuick(60)">1h</button>
+      </div>
+    </div>
+    <div id="timerRunning" style="display:none">
+      <div class="timer-display" id="timerDisplay">0:00</div>
+      <div class="sw-buttons">
+        <button class="btn btn-primary" id="timerPauseBtn" onclick="timerPause()">pause</button>
+        <button class="btn btn-danger" onclick="timerCancel()">cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- CALCULATOR -->
+  <div class="prod-content" id="prodCalc">
+    <div class="calc-display"><div class="calc-expr" id="calcExpr"></div><div id="calcResult">0</div></div>
+    <div class="calc-grid">
+      <button class="calc-btn" onclick="calcInput('C')">C</button>
+      <button class="calc-btn" onclick="calcInput('±')">±</button>
+      <button class="calc-btn op" onclick="calcInput('%')">%</button>
+      <button class="calc-btn op" onclick="calcInput('÷')">÷</button>
+      <button class="calc-btn" onclick="calcInput('7')">7</button>
+      <button class="calc-btn" onclick="calcInput('8')">8</button>
+      <button class="calc-btn" onclick="calcInput('9')">9</button>
+      <button class="calc-btn op" onclick="calcInput('×')">×</button>
+      <button class="calc-btn" onclick="calcInput('4')">4</button>
+      <button class="calc-btn" onclick="calcInput('5')">5</button>
+      <button class="calc-btn" onclick="calcInput('6')">6</button>
+      <button class="calc-btn op" onclick="calcInput('-')">−</button>
+      <button class="calc-btn" onclick="calcInput('1')">1</button>
+      <button class="calc-btn" onclick="calcInput('2')">2</button>
+      <button class="calc-btn" onclick="calcInput('3')">3</button>
+      <button class="calc-btn op" onclick="calcInput('+')">+</button>
+      <button class="calc-btn wide" onclick="calcInput('0')">0</button>
+      <button class="calc-btn" onclick="calcInput('.')">.</button>
+      <button class="calc-btn eq" onclick="calcInput('=')">=</button>
+    </div>
+  </div>
+
+  <!-- UNIT CONVERTER -->
+  <div class="prod-content" id="prodConverter">
+    <div class="conv-cats" id="convCats"></div>
+    <div id="convBody"></div>
+  </div>
+
+  <!-- JOBS / QUOTES -->
+  <div class="prod-content" id="prodJobs">
+    <div class="add-bar"><button class="btn btn-primary btn-full" onclick="openJobEditor()">+ new job / quote</button></div>
+    <div id="jobsList"></div>
+  </div>
+</div>
+
 <!-- STUDIO -->
 <div class="panel" id="panelStudio">
   <div class="panel-header">Studio</div>
@@ -283,11 +527,7 @@
     <button class="btn" onclick="openCardEditor()">🃏 Card Editor</button>
     <button class="btn" onclick="openPartsEditor()">✏️ Mascot Editor</button>
   </div>
-  <div style="margin-top:24px">
-    <div class="panel-header">About</div>
-    <div class="about-text" id="aboutText"></div>
-    <button class="btn" onclick="openEditor('about')" style="margin-top:8px">edit about</button>
-  </div>
+
   <div class="footer-preview" id="footerPreview"></div>
   <button class="btn" onclick="openEditor('footer')" style="margin-top:8px">edit footer</button>
 </div>
@@ -356,6 +596,11 @@
     </div>
   </div>
   <div class="setting-group">
+    <h3>About You</h3>
+    <div class="about-text" id="aboutText" style="margin-bottom:12px"></div>
+    <button class="btn btn-full" onclick="openEditor('about')">edit about text</button>
+  </div>
+  <div class="setting-group">
     <h3>Danger Zone</h3>
     <div class="setting-row">
       <button class="btn btn-danger btn-full" onclick="clearAllData()">Delete All Data</button>
@@ -363,7 +608,8 @@
   </div>
   <div class="setting-group">
     <h3>About</h3>
-    <p style="font-size:0.8rem;color:var(--white-dim)">Malys Journal — personal PWA. All data stored locally on this device via IndexedDB. Nothing leaves your phone.</p>
+    <p style="font-size:0.8rem;color:var(--white-dim)">MalysVSBotWare™ Journal — personal PWA. All data stored locally on this device via IndexedDB. Nothing leaves your phone.</p>
+    <p style="font-size:0.75rem;color:var(--red);margin-top:10px;padding:8px;border:1px solid var(--red-dim);background:rgba(153,17,17,0.1)">⚠ Warning: Clearing your browser's "site data" or "all data" will permanently delete everything in this app. Only clear "cached images and files" if needed — that's safe. Export your data regularly as a backup.</p>
   </div>
 </div>
 
@@ -378,6 +624,10 @@
   <button class="tab-btn" onclick="switchTab('Dashboard')" id="tabDashboard">
     <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
     <span>Dash</span>
+  </button>
+  <button class="tab-btn" onclick="switchTab('Productivity')" id="tabProductivity">
+    <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+    <span>Prod</span>
   </button>
   <button class="tab-btn" onclick="switchTab('Studio')" id="tabStudio">
     <svg viewBox="0 0 24 24"><circle cx="13.5" cy="6.5" r="2.5"/><circle cx="19" cy="11.5" r="2.5"/><circle cx="17" cy="18.5" r="2.5"/><circle cx="8" cy="18" r="2.5"/><circle cx="5" cy="11.5" r="2.5"/><path d="M12 2C6.5 2 2 6.5 2 12s4.5 10 10 10 10-4.5 10-10-4.5-10-10-10z" fill="none"/></svg>
@@ -443,6 +693,63 @@
   <div class="card-editor-controls" id="cardEditorControls"></div>
 </div>
 
+
+
+<!-- JOB EDITOR -->
+<div class="modal-overlay" id="jobModal"><div class="modal" style="max-height:95vh">
+  <h3 id="jobEditorTitle">New Job</h3>
+  <div class="error-msg" id="jobError"></div>
+  <label>Job Title</label><input type="text" id="jobTitle" placeholder="Window replacement - Smith residence">
+  <label>Client</label><input type="text" id="jobClient" placeholder="John Smith">
+  <label>Date</label><input type="text" id="jobDate" placeholder="2026-03-24">
+  <label>Status</label>
+  <select id="jobStatus"><option value="quote">Quote</option><option value="active">In Progress</option><option value="complete">Complete</option></select>
+  <label>Line Items</label>
+  <div id="jobLineItems"></div>
+  <div style="display:flex;gap:6px;margin:8px 0">
+    <input type="text" id="liDesc" placeholder="Description" style="flex:2">
+    <input type="number" id="liQty" placeholder="Qty" style="width:50px">
+    <input type="number" id="liPrice" placeholder="Price" style="width:70px" step="0.01">
+    <button class="btn" onclick="addLineItem()">+</button>
+  </div>
+  <div class="job-grand-total" id="jobGrandTotal">$0.00</div>
+  <label>Photos</label>
+  <div class="job-photos" id="jobPhotos"></div>
+  <button class="btn" onclick="addJobPhoto()" style="margin-bottom:12px">+ add photo</button>
+  <label>Notes</label><textarea id="jobNotes" placeholder="Additional notes, measurements, etc..." style="min-height:60px"></textarea>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeJobEditor()">Cancel</button>
+    <button class="btn btn-danger" id="jobDeleteBtn" style="display:none" onclick="deleteJob()">Delete</button>
+    <button class="btn btn-green" id="jobCalBtn" style="display:none" onclick="jobToCalendar()">+ Calendar</button>
+    <button class="btn btn-primary" onclick="saveJob()">Save</button>
+  </div>
+</div></div>
+
+<!-- EVENT EDITOR -->
+<div class="modal-overlay" id="eventModal"><div class="modal">
+  <h3 id="eventEditorTitle">New Event</h3>
+  <div class="error-msg" id="eventError"></div>
+  <label>Title</label><input type="text" id="evTitle" placeholder="Event title">
+  <label>Date</label><input type="text" id="evDate" placeholder="2026-03-24">
+  <label>Time (optional)</label><input type="text" id="evTime" placeholder="09:00">
+  <label>End Time (optional)</label><input type="text" id="evEndTime" placeholder="10:00">
+  <label>Color</label>
+  <div style="display:flex;gap:6px;margin-bottom:12px">
+    <button class="btn" style="background:#e50000;border-color:#e50000;width:32px;height:28px" onclick="setEvColor('#e50000')"></button>
+    <button class="btn" style="background:#0ea5e9;border-color:#0ea5e9;width:32px;height:28px" onclick="setEvColor('#0ea5e9')"></button>
+    <button class="btn" style="background:#22c55e;border-color:#22c55e;width:32px;height:28px" onclick="setEvColor('#22c55e')"></button>
+    <button class="btn" style="background:#f59e0b;border-color:#f59e0b;width:32px;height:28px" onclick="setEvColor('#f59e0b')"></button>
+    <button class="btn" style="background:#a855f7;border-color:#a855f7;width:32px;height:28px" onclick="setEvColor('#a855f7')"></button>
+    <button class="btn" style="background:#f43f5e;border-color:#f43f5e;width:32px;height:28px" onclick="setEvColor('#f43f5e')"></button>
+  </div>
+  <label>Notes (optional)</label><textarea id="evNotes" placeholder="Details..."></textarea>
+  <div class="modal-actions">
+    <button class="btn" onclick="closeModal('eventModal')">Cancel</button>
+    <button class="btn btn-danger" id="evDeleteBtn" style="display:none" onclick="deleteEvent()">Delete</button>
+    <button class="btn btn-primary" onclick="saveEvent()">Save</button>
+  </div>
+</div></div>
+
 <div class="toast" id="toast"></div>
 
 <!-- MASCOT PARTS EDITOR -->
@@ -474,6 +781,50 @@
   </div>
 </div>
 
+
+<!-- PAINT TOOL -->
+<div class="paint-overlay" id="paintOverlay">
+  <div class="paint-topbar">
+    <div style="display:flex;gap:4px">
+      <button class="btn" onclick="cancelPaint()">✕</button>
+      <button class="btn" onclick="paintUndo()">↩</button>
+      <button class="btn" onclick="paintRedo()">↪</button>
+    </div>
+    <span style="font-family:var(--font-heading);font-size:0.6rem;color:var(--red);letter-spacing:2px;text-transform:uppercase">Draw</span>
+    <div style="display:flex;gap:4px">
+      <button class="btn" onclick="clearPaintLayer()">clear</button>
+      <button class="btn btn-primary" onclick="savePaintToEntry()">done</button>
+    </div>
+  </div>
+  <div class="paint-canvas-wrap" id="paintCanvasWrap">
+    <canvas id="paintCanvas"></canvas>
+    <div class="paint-layers-panel" id="paintLayersPanel"></div>
+  </div>
+  <div class="paint-toolbar">
+    <div class="paint-tools-row">
+      <button class="paint-tool active" id="ptPen" onclick="setPaintTool('pen')" title="Pen">✏</button>
+      <button class="paint-tool" id="ptMarker" onclick="setPaintTool('marker')" title="Marker">🖊</button>
+      <button class="paint-tool" id="ptSpray" onclick="setPaintTool('spray')" title="Spray">💨</button>
+      <button class="paint-tool" id="ptEraser" onclick="setPaintTool('eraser')" title="Eraser">⬜</button>
+      <input type="color" id="paintColorPicker" class="paint-color-btn" value="#e50000" oninput="setPaintColor(this.value)">
+      <div class="paint-colors" id="paintSwatches"></div>
+      <button class="paint-tool" id="ptLayers" onclick="togglePaintLayers()" title="Layers" style="margin-left:auto">☰</button>
+    </div>
+    <div class="paint-tools-row">
+      <div class="paint-slider-row">
+        <label>Size</label>
+        <input type="range" id="paintSize" min="1" max="50" value="4" oninput="document.getElementById('paintSizeVal').textContent=this.value">
+        <div class="paint-val" id="paintSizeVal">4</div>
+      </div>
+      <div class="paint-slider-row">
+        <label>Opa</label>
+        <input type="range" id="paintOpacity" min="5" max="100" value="100" oninput="document.getElementById('paintOpaVal').textContent=this.value">
+        <div class="paint-val" id="paintOpaVal">100</div>
+      </div>
+    </div>
+  </div>
+</div>
+
 <!-- SOLITAIRE GAME -->
 <div class="sol-overlay" id="solOverlay">
   <div class="sol-topbar">
@@ -500,8 +851,8 @@
 /* ============================================================
    INDEXEDDB
    ============================================================ */
-const DB_NAME='malys_journal';const DB_VER=1;
-const STORES=['settings','beliefs','tiles','projects','games','entries','resources','socials','images','svg_config'];
+const DB_NAME='malys_journal';const DB_VER=3;
+const STORES=['settings','beliefs','tiles','projects','games','entries','resources','socials','images','svg_config','events','jobs'];
 let db=null;
 
 function openDB(){
@@ -582,7 +933,7 @@ function closeModal(id){document.getElementById(id).classList.remove('visible')}
 /* ============================================================
    TAB NAVIGATION
    ============================================================ */
-const TABS=['Journal','Dashboard','Studio','Sections','Settings'];
+const TABS=['Journal','Dashboard','Productivity','Studio','Sections','Settings'];
 function switchTab(name){
   TABS.forEach(t=>{
     document.getElementById('panel'+t).classList.toggle('active',t===name);
@@ -622,6 +973,22 @@ function initQuill(){
     };
     input.click();
   });
+  /* Add paint/draw button to toolbar */
+  var toolbar=editorQuill.getModule('toolbar').container;
+  var paintBtn=document.createElement('button');
+  paintBtn.type='button';
+  paintBtn.className='ql-paint';
+  paintBtn.innerHTML='\u{1F3A8}';
+  paintBtn.title='Draw';
+  paintBtn.style.cssText='font-size:1rem;padding:0 4px;cursor:pointer;background:none;border:none;color:var(--white-dim)';
+  paintBtn.onclick=function(){
+    openPaint(function(dataUrl){
+      var range=editorQuill.getSelection(true);
+      editorQuill.insertEmbed(range?range.index:0,'image',dataUrl);
+    });
+  };
+  var lastGroup=toolbar.querySelector('.ql-formats:last-child')||toolbar;
+  lastGroup.appendChild(paintBtn);
 }
 /* Resize image to max dimension, compress. Keeps PNG for transparency. */
 function resizeImage(file,maxDim,quality,cb){
@@ -789,31 +1156,31 @@ async function saveEditor(){
       const title=gf('beliefTitle').value.trim(),content=gf('beliefContent').value.trim();
       if(!title||!content){showErr('Title and description required.');return}
       const all=await dbGetAll('beliefs');const so=all.length?Math.max(...all.map(b=>b.sort_order||0))+1:1;
-      const data={id:editId||uid(),title,content,sort_order:editId?(await dbGet('beliefs',editId))?.sort_order||so:so};
+      const data={id:editId||uid(),title,content,sort_order:editId?((await dbGet('beliefs',editId))||{}).sort_order||so:so};
       await dbPut('beliefs',data);closeEditor();loadBeliefs();showToast(editId?'Updated':'Belief added');
     }else if(editType==='project'){
       const title=gf('projTitle').value.trim(),tags=gf('projTags').value.trim(),desc=gf('projDesc').value.trim(),url=gf('projUrl').value.trim(),lt=gf('projLinkText').value.trim();
       if(!title||!desc){showErr('Title and description required.');return}
       const all=await dbGetAll('projects');const so=all.length?Math.max(...all.map(p=>p.sort_order||0))+1:1;
-      await dbPut('projects',{id:editId||uid(),title,tags,description:desc,link_url:url,link_text:lt,sort_order:editId?(await dbGet('projects',editId))?.sort_order||so:so});
+      await dbPut('projects',{id:editId||uid(),title,tags,description:desc,link_url:url,link_text:lt,sort_order:editId?((await dbGet('projects',editId))||{}).sort_order||so:so});
       closeEditor();loadProjects();showToast(editId?'Updated':'Project added');
     }else if(editType==='game'){
       const title=gf('gameTitle').value.trim(),icon=gf('gameIcon').value.trim(),desc=gf('gameDesc').value.trim(),tags=gf('gameTags').value.trim(),url=gf('gameUrl').value.trim();
       if(!title){showErr('Title required.');return}
       const all=await dbGetAll('games');const so=all.length?Math.max(...all.map(g=>g.sort_order||0))+1:1;
-      await dbPut('games',{id:editId||uid(),title,icon,description:desc,tags,url,sort_order:editId?(await dbGet('games',editId))?.sort_order||so:so});
+      await dbPut('games',{id:editId||uid(),title,icon,description:desc,tags,url,sort_order:editId?((await dbGet('games',editId))||{}).sort_order||so:so});
       closeEditor();loadGames();showToast(editId?'Updated':'Game added');
     }else if(editType==='resource'){
       const cat=gf('resCat').value,title=gf('resTitle').value.trim(),icon=gf('resIcon').value.trim(),desc=gf('resDesc').value.trim(),url=gf('resUrl').value.trim();
       if(!title||!url){showErr('Title and URL required.');return}
       const all=await dbGetAll('resources');const so=all.length?Math.max(...all.map(r=>r.sort_order||0))+1:1;
-      await dbPut('resources',{id:editId||uid(),category:cat,title,icon,description:desc,url,sort_order:editId?(await dbGet('resources',editId))?.sort_order||so:so});
+      await dbPut('resources',{id:editId||uid(),category:cat,title,icon,description:desc,url,sort_order:editId?((await dbGet('resources',editId))||{}).sort_order||so:so});
       closeEditor();loadResources();showToast(editId?'Updated':'Resource added');
     }else if(editType==='social'){
       const ik=gf('socIcon').value,name=gf('socName').value.trim(),handle=gf('socHandle').value.trim(),url=gf('socUrl').value.trim();
       if(!name||!url){showErr('Name and URL required.');return}
       const all=await dbGetAll('socials');const so=all.length?Math.max(...all.map(s=>s.sort_order||0))+1:1;
-      await dbPut('socials',{id:editId||uid(),icon_key:ik,name,handle,url,sort_order:editId?(await dbGet('socials',editId))?.sort_order||so:so});
+      await dbPut('socials',{id:editId||uid(),icon_key:ik,name,handle,url,sort_order:editId?((await dbGet('socials',editId))||{}).sort_order||so:so});
       closeEditor();loadSocials();showToast(editId?'Updated':'Link added');
     }else if(editType==='hero'){
       await setSetting('hero_name',gf('heroName').value.trim());
@@ -845,7 +1212,7 @@ async function loadEntries(){
   const el=document.getElementById('entriesList');
   const items=(await dbGetAll('entries')).sort((a,b)=>(b.created_at||'').localeCompare(a.created_at||''));
   if(!items.length){el.innerHTML='<p class="empty-msg">no entries yet. tap + to start writing.</p>';return}
-  el.innerHTML=items.map(e=>'<div class="card"><div class="card-date">'+esc(e.entry_date)+'</div><div class="card-title">'+esc(e.title)+'</div><div class="rich-content">'+renderContent(e.content)+'</div><div class="card-actions"><button class="btn" onclick="openEditor(\'entry\',\''+e.id+'\')">edit</button><button class="btn btn-danger" onclick="deleteItem(\'entries\',\''+e.id+'\',loadEntries)">delete</button></div></div>').join('');
+  el.innerHTML=items.map(e=>'<div class="card"><div class="card-date">'+esc(e.entry_date)+'</div><div class="card-title">'+esc(e.title)+'</div><div class="rich-content">'+renderContent(e.content)+'</div><div class="card-actions"><button class="btn" onclick="openEditor(\'entry\',\''+e.id+'\')">edit</button><button class="btn btn-danger" onclick="deleteItem(\'entries\',\''+e.id+'\',loadEntries)">delete</button><button class="entry-cal-btn" onclick="entryToCalendar(\''+e.id+'\')">+ cal</button></div></div>').join('');
 }
 
 async function loadTiles(){
@@ -930,7 +1297,7 @@ async function loadHero(){
 }
 async function loadAbout(){const v=await getSetting('about_intro','');document.getElementById('aboutText').innerHTML=v?textToHtml(v):'<p class="empty-msg">no about text yet.</p>'}
 async function loadFooter(){
-  const l1=await getSetting('footer_line1','built by thought');
+  const l1=await getSetting('footer_line1','MalysVSBotWare\u2122 — built by thought');
   const l2=await getSetting('footer_line2','keep on keepin\' on.');
   document.getElementById('footerPreview').innerHTML='<p>'+esc(l1)+'</p><p style="margin-top:4px">'+esc(l2)+'</p>';
 }
@@ -1266,7 +1633,7 @@ function renderThemeUI(){
 async function exportData(){
   var settingsArr=await dbGetAll('settings');var settings={};
   settingsArr.forEach(function(s){settings[s.key]=s.value});
-  var data={format:'malys-transfer-v1',exported_from:'app',exported_at:new Date().toISOString(),settings:settings,beliefs:await dbGetAll('beliefs'),tiles:await dbGetAll('tiles'),projects:await dbGetAll('projects'),games:await dbGetAll('games'),entries:await dbGetAll('entries'),resources:await dbGetAll('resources'),socials:await dbGetAll('socials')};
+  var data={format:'malys-transfer-v1',exported_from:'app',exported_at:new Date().toISOString(),settings:settings,beliefs:await dbGetAll('beliefs'),tiles:await dbGetAll('tiles'),projects:await dbGetAll('projects'),games:await dbGetAll('games'),entries:await dbGetAll('entries'),resources:await dbGetAll('resources'),socials:await dbGetAll('socials'),events:await dbGetAll('events'),jobs:await dbGetAll('jobs')};
   data.svg_config=await dbGetAll('svg_config');
   data._app_only={images:await dbGetAll('images')};
   var blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'});
@@ -1280,7 +1647,7 @@ async function importData(e){
   try{
     var text=await file.text();var data=JSON.parse(text);
     if(data.settings){await dbClear('settings');if(Array.isArray(data.settings)){for(var s of data.settings)await dbPut('settings',s)}else{for(var k of Object.keys(data.settings))await dbPut('settings',{key:k,value:data.settings[k]})}}
-    var mapping=[['beliefs','beliefs'],['tiles','tiles'],['dashboard_tiles','tiles'],['projects','projects'],['games','games'],['entries','entries'],['journal_entries','entries'],['resources','resources'],['socials','socials'],['social_links','socials']];
+    var mapping=[['beliefs','beliefs'],['tiles','tiles'],['dashboard_tiles','tiles'],['projects','projects'],['games','games'],['entries','entries'],['journal_entries','entries'],['resources','resources'],['socials','socials'],['social_links','socials'],['events','events'],['jobs','jobs']];
     var cleared={};
     for(var m of mapping){if(data[m[0]]&&Array.isArray(data[m[0]])){if(!cleared[m[1]]){await dbClear(m[1]);cleared[m[1]]=true}for(var item of data[m[0]]){delete item.user_id;item.id=toUUID(item.id);await dbPut(m[1],item)}}}
     if(data.svg_config&&Array.isArray(data.svg_config)){await dbClear('svg_config');for(var cfg of data.svg_config)await dbPut('svg_config',cfg)}
@@ -1306,7 +1673,7 @@ async function mergeData(e){
         else if(isNewer(copy,existing[copy.id])){var merged=Object.assign({},existing[copy.id],copy);await dbPut(storeName,merged);updated++}}
       return{added:added,updated:updated};
     }
-    var merges=[['beliefs','beliefs'],['tiles','tiles'],['dashboard_tiles','tiles'],['projects','projects'],['games','games'],['entries','entries'],['journal_entries','entries'],['resources','resources'],['socials','socials'],['social_links','socials']];
+    var merges=[['beliefs','beliefs'],['tiles','tiles'],['dashboard_tiles','tiles'],['projects','projects'],['games','games'],['entries','entries'],['journal_entries','entries'],['resources','resources'],['socials','socials'],['social_links','socials'],['events','events'],['jobs','jobs']];
     var counts={added:0,updated:0};
     for(var m of merges){if(data[m[0]]&&Array.isArray(data[m[0]])){var r=await mergeStore(m[0],m[1]);counts.added+=r.added;counts.updated+=r.updated}}
     if(data.svg_config&&Array.isArray(data.svg_config))for(var cfg of data.svg_config)await dbPut('svg_config',cfg);
@@ -1321,6 +1688,738 @@ async function clearAllData(){
   for(const s of STORES)await dbClear(s);
   loadAll();showToast('All data cleared');
 }
+
+
+/* ============================================================
+   PRODUCTIVITY SUB-NAV
+   ============================================================ */
+function showProd(name,evt){
+  document.querySelectorAll('.prod-content').forEach(el=>el.classList.remove('active'));
+  document.querySelectorAll('.prod-sub-btn').forEach(el=>el.classList.remove('active'));
+  var map={calendar:'Calendar',stopwatch:'Stopwatch',timer:'Timer',calc:'Calc',converter:'Converter',jobs:'Jobs'};
+  document.getElementById('prod'+map[name]).classList.add('active');
+  if(evt&&evt.target)evt.target.classList.add('active');
+}
+
+/* ============================================================
+   CALENDAR
+   ============================================================ */
+var calYear,calMonth,calSelectedDate=null,calView='month';
+function initCal(){var d=new Date();calYear=d.getFullYear();calMonth=d.getMonth();calSelectedDate=formatDate(d);renderCal()}
+function formatDate(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function calNav(dir){
+  if(calView==='month'){calMonth+=dir;if(calMonth<0){calMonth=11;calYear--}if(calMonth>11){calMonth=0;calYear++}}
+  else{var d=new Date(calYear,calMonth,parseInt((calSelectedDate||'').split('-')[2])||1);d.setDate(d.getDate()+dir*7);calYear=d.getFullYear();calMonth=d.getMonth();calSelectedDate=formatDate(d)}
+  renderCal();
+}
+function toggleCalView(){calView=calView==='month'?'week':'month';document.getElementById('calToggle').textContent=calView==='month'?'week':'month';renderCal()}
+
+async function renderCal(){
+  var MONTHS=['January','February','March','April','May','June','July','August','September','October','November','December'];
+  document.getElementById('calTitle').textContent=MONTHS[calMonth]+' '+calYear;
+  var events=await dbGetAll('events');
+  var evByDate={};events.forEach(function(ev){if(!evByDate[ev.date])evByDate[ev.date]=[];evByDate[ev.date].push(ev)});
+  var today=formatDate(new Date());
+  if(calView==='month') renderMonthView(evByDate,today);
+  else renderWeekView(evByDate,today);
+  renderCalEvents(evByDate);
+}
+
+function renderMonthView(evByDate,today){
+  var first=new Date(calYear,calMonth,1);var startDay=first.getDay();
+  var daysInMonth=new Date(calYear,calMonth+1,0).getDate();
+  var daysInPrev=new Date(calYear,calMonth,0).getDate();
+  var DOW=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  var html='<div class="cal-grid">';
+  DOW.forEach(function(d){html+='<div class="cal-dow">'+d+'</div>'});
+  var day=1-startDay;var totalCells=Math.ceil((startDay+daysInMonth)/7)*7;
+  for(var i=0;i<totalCells;i++){
+    var d=day+i;var inMonth=d>=1&&d<=daysInMonth;
+    var displayNum=inMonth?d:d<1?daysInPrev+d:d-daysInMonth;
+    var dateStr=inMonth?calYear+'-'+String(calMonth+1).padStart(2,'0')+'-'+String(d).padStart(2,'0'):'';
+    var cls='cal-day';if(!inMonth)cls+=' other-month';
+    if(dateStr===today)cls+=' today';
+    if(dateStr===calSelectedDate)cls+=' selected';
+    var dots='';
+    if(dateStr&&evByDate[dateStr]){dots='<div class="cal-dots">';evByDate[dateStr].slice(0,3).forEach(function(ev){dots+='<div class="cal-dot" style="background:'+(ev.color||'var(--red)')+'"></div>'});dots+='</div>'}
+    else{dots='<div class="cal-dots"></div>'}
+    var onclick=dateStr?' onclick="selectCalDate(\''+dateStr+'\')"':'';
+    html+='<div class="'+cls+'"'+onclick+'><div class="cal-day-num">'+displayNum+'</div>'+dots+'</div>';
+  }
+  html+='</div>';
+  document.getElementById('calBody').innerHTML=html;
+}
+
+function renderWeekView(evByDate,today){
+  var sel=calSelectedDate?new Date(calSelectedDate+'T12:00:00'):new Date();
+  var dow=sel.getDay();var weekStart=new Date(sel);weekStart.setDate(sel.getDate()-dow);
+  var DOW=['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+  var html='';
+  for(var i=0;i<7;i++){
+    var d=new Date(weekStart);d.setDate(weekStart.getDate()+i);
+    var dateStr=formatDate(d);
+    var cls='cal-week-day';if(dateStr===today)cls+=' today';
+    html+='<div class="'+cls+'" onclick="selectCalDate(\''+dateStr+'\')">';
+    html+='<div class="cal-week-day-header"><span class="cal-week-day-name">'+DOW[d.getDay()]+'</span><span class="cal-week-day-date">'+d.getDate()+'</span></div>';
+    if(evByDate[dateStr]){evByDate[dateStr].slice().sort(function(a,b){return(a.time||'').localeCompare(b.time||'')}).forEach(function(ev){
+      html+='<div class="cal-event-pill" style="border-left-color:'+(ev.color||'var(--red)')+'">'+esc(ev.title)+(ev.time?'<span class="ev-time">'+esc(ev.time)+'</span>':'')+'</div>';
+    })}
+    html+='</div>';
+  }
+  document.getElementById('calBody').innerHTML=html;
+}
+
+function renderCalEvents(evByDate){
+  var date=calSelectedDate||formatDate(new Date());
+  var evs=(evByDate[date]||[]).slice().sort(function(a,b){return(a.time||'').localeCompare(b.time||'')});
+  var el=document.getElementById('calEvents');
+  if(!evs.length){el.innerHTML='<p class="empty-msg">no events for '+date+'</p>';return}
+  el.innerHTML='<div class="events-day-title">'+date+'</div>'+evs.map(function(ev){
+    return'<div class="event-card" style="border-left-color:'+(ev.color||'var(--red)')+'"><h4>'+esc(ev.title)+'</h4><div class="ev-meta">'+(ev.time?esc(ev.time)+(ev.end_time?' \u2014 '+esc(ev.end_time):''):'all day')+'</div>'+(ev.notes?'<p style="font-size:0.75rem;color:var(--white-dim);margin-top:4px">'+esc(ev.notes)+'</p>':'')+'<div class="card-actions"><button class="btn" onclick="openEventEditor(\''+ev.id+'\')">edit</button><button class="btn btn-danger" onclick="deleteEventById(\''+ev.id+'\')">delete</button></div></div>';
+  }).join('');
+}
+
+function selectCalDate(dateStr){calSelectedDate=dateStr;renderCal()}
+
+/* Event CRUD */
+var editingEventId=null,evColor='#e50000';
+function setEvColor(c){evColor=c;document.querySelectorAll('#eventModal .modal button[onclick^="setEvColor"]').forEach(function(b){b.style.outline=b.getAttribute('onclick').includes(c)?'2px solid var(--white)':'none';b.style.outlineOffset='2px'})}
+function openEventEditor(id){
+  editingEventId=id||null;
+  var eerr=document.getElementById('eventError');eerr.textContent='';eerr.classList.remove('visible');
+  document.getElementById('eventEditorTitle').textContent=id?'Edit Event':'New Event';
+  document.getElementById('evDeleteBtn').style.display=id?'inline-block':'none';
+  evColor='#e50000';
+  if(id){dbGet('events',id).then(function(ev){if(ev){
+    document.getElementById('evTitle').value=ev.title;
+    document.getElementById('evDate').value=ev.date;
+    document.getElementById('evTime').value=ev.time||'';
+    document.getElementById('evEndTime').value=ev.end_time||'';
+    document.getElementById('evNotes').value=ev.notes||'';
+    evColor=ev.color||'#e50000';
+    setTimeout(function(){setEvColor(evColor)},50);
+  }})}else{
+    document.getElementById('evTitle').value='';
+    document.getElementById('evDate').value=calSelectedDate||formatDate(new Date());
+    document.getElementById('evTime').value='';
+    document.getElementById('evEndTime').value='';
+    document.getElementById('evNotes').value='';
+  }
+  openModal('eventModal');
+}
+async function saveEvent(){
+  var title=document.getElementById('evTitle').value.trim();
+  var date=document.getElementById('evDate').value.trim();
+  if(!title||!date){document.getElementById('eventError').textContent='Title and date required.';document.getElementById('eventError').classList.add('visible');return}
+  var ev={id:editingEventId||uid(),title:title,date:date,time:document.getElementById('evTime').value.trim(),end_time:document.getElementById('evEndTime').value.trim(),notes:document.getElementById('evNotes').value.trim(),color:evColor,created_at:new Date().toISOString(),updated_at:new Date().toISOString()};
+  if(editingEventId){var old=await dbGet('events',editingEventId);if(old&&old.created_at)ev.created_at=old.created_at}
+  await dbPut('events',ev);closeModal('eventModal');calSelectedDate=date;renderCal();showToast(editingEventId?'Event updated':'Event added');editingEventId=null;
+}
+async function deleteEvent(){
+  if(!editingEventId||!confirm('Delete this event?'))return;
+  await dbDel('events',editingEventId);closeModal('eventModal');editingEventId=null;renderCal();showToast('Event deleted');
+}
+async function deleteEventById(id){
+  if(!confirm('Delete this event?'))return;
+  await dbDel('events',id);renderCal();showToast('Deleted');
+}
+async function loadEvents(){initCal()}
+
+/* ============================================================
+   STOPWATCH
+   ============================================================ */
+var swRunning=false,swStart=0,swElapsed=0,swInterval=null,swLapList=[];
+function swToggle(){
+  if(swRunning){clearInterval(swInterval);swElapsed+=Date.now()-swStart;swRunning=false;document.getElementById('swStartBtn').textContent='resume'}
+  else{swStart=Date.now();swRunning=true;document.getElementById('swStartBtn').textContent='stop';swInterval=setInterval(swTick,37)}
+}
+function swTick(){var t=swElapsed+(Date.now()-swStart);var m=Math.floor(t/60000),s=Math.floor((t%60000)/1000),ms=Math.floor((t%1000)/10);document.getElementById('swTime').innerHTML=m+':'+String(s).padStart(2,'0')+'<span class="sw-ms">.'+String(ms).padStart(2,'0')+'</span>'}
+function swLap(){
+  if(!swRunning)return;var t=swElapsed+(Date.now()-swStart);
+  swLapList.push(t);var el=document.getElementById('swLaps');
+  var m=Math.floor(t/60000),s=Math.floor((t%60000)/1000),ms=Math.floor((t%1000)/10);
+  el.innerHTML='<div class="sw-lap"><span>Lap '+swLapList.length+'</span><span>'+m+':'+String(s).padStart(2,'0')+'.'+String(ms).padStart(2,'0')+'</span></div>'+el.innerHTML;
+}
+function swReset(){clearInterval(swInterval);swRunning=false;swElapsed=0;swLapList=[];document.getElementById('swTime').innerHTML='0:00<span class="sw-ms">.00</span>';document.getElementById('swStartBtn').textContent='start';document.getElementById('swLaps').innerHTML=''}
+
+/* ============================================================
+   TIMER
+   ============================================================ */
+var timerInterval=null,timerRemaining=0,timerPaused=false;
+function timerQuick(m){document.getElementById('timerH').value=Math.floor(m/60);document.getElementById('timerM').value=m%60;document.getElementById('timerS').value=0;timerStart()}
+function timerStart(){
+  if(timerInterval)return;
+  var h=parseInt(document.getElementById('timerH').value)||0;
+  var m=parseInt(document.getElementById('timerM').value)||0;
+  var s=parseInt(document.getElementById('timerS').value)||0;
+  timerRemaining=h*3600+m*60+s;if(timerRemaining<=0)return;
+  timerPaused=false;document.getElementById('timerSetup').style.display='none';document.getElementById('timerRunning').style.display='block';
+  document.getElementById('timerPauseBtn').textContent='pause';timerRenderTime();
+  timerInterval=setInterval(function(){timerRemaining--;timerRenderTime();if(timerRemaining<=0){clearInterval(timerInterval);timerInterval=null;timerDone()}},1000);
+}
+function timerRenderTime(){var h=Math.floor(timerRemaining/3600),m=Math.floor((timerRemaining%3600)/60),s=timerRemaining%60;var el=document.getElementById('timerDisplay');el.classList.remove('timer-done');el.textContent=(h?h+':':'')+String(m).padStart(2,'0')+':'+String(s).padStart(2,'0')}
+function timerPause(){if(timerPaused){timerPaused=false;document.getElementById('timerPauseBtn').textContent='pause';timerInterval=setInterval(function(){timerRemaining--;timerRenderTime();if(timerRemaining<=0){clearInterval(timerInterval);timerInterval=null;timerDone()}},1000)}else{timerPaused=true;clearInterval(timerInterval);document.getElementById('timerPauseBtn').textContent='resume'}}
+function timerCancel(){clearInterval(timerInterval);timerInterval=null;timerPaused=false;document.getElementById('timerSetup').style.display='block';document.getElementById('timerRunning').style.display='none'}
+function timerDone(){document.getElementById('timerDisplay').textContent='0:00';document.getElementById('timerDisplay').classList.add('timer-done');try{navigator.vibrate&&navigator.vibrate([200,100,200,100,200])}catch(e){}showToast('Timer done!')}
+
+/* ============================================================
+   CALCULATOR
+   ============================================================ */
+var calcCurrent='0',calcExpr='',calcOp=null,calcPrev=null,calcNewNumber=true;
+function calcInput(key){
+  if(key==='C'){calcCurrent='0';calcExpr='';calcOp=null;calcPrev=null;calcNewNumber=true}
+  else if(key==='±'){calcCurrent=calcCurrent.startsWith('-')?calcCurrent.slice(1):'-'+calcCurrent}
+  else if(key==='%'){calcCurrent=String(parseFloat(calcCurrent)/100)}
+  else if('0123456789'.includes(key)){if(calcNewNumber){calcCurrent=key;calcNewNumber=false}else{calcCurrent+=key}}
+  else if(key==='.'){if(!calcCurrent.includes('.')){calcCurrent+='.';calcNewNumber=false}}
+  else if('+-×÷'.includes(key)){if(calcOp&&!calcNewNumber)calcEval();calcPrev=parseFloat(calcCurrent);calcOp=key;calcExpr=calcCurrent+' '+key+' ';calcNewNumber=true}
+  else if(key==='='){if(calcOp)calcEval();calcOp=null;calcExpr=''}
+  document.getElementById('calcResult').textContent=calcCurrent;document.getElementById('calcExpr').textContent=calcExpr;
+}
+function calcEval(){
+  var a=calcPrev,b=parseFloat(calcCurrent),r=0;
+  if(calcOp==='+')r=a+b;else if(calcOp==='-')r=a-b;else if(calcOp==='×')r=a*b;else if(calcOp==='÷')r=b!==0?a/b:0;
+  calcCurrent=String(Math.round(r*1e10)/1e10);calcNewNumber=true;calcPrev=null;
+}
+
+
+/* Journal entry → calendar */
+function entryToCalendar(entryId){
+  dbGet('entries',entryId).then(function(entry){
+    if(!entry)return;
+    switchTab('Productivity');
+    setTimeout(function(){
+      showProd('calendar',{target:document.querySelector('.prod-sub-btn')});
+      setTimeout(function(){
+        openEventEditor();
+        document.getElementById('evTitle').value=entry.title||'';
+        /* Try to parse the entry_date into YYYY-MM-DD */
+        var d=new Date(entry.entry_date);
+        var dateStr=isNaN(d.getTime())?formatDate(new Date()):formatDate(d);
+        document.getElementById('evDate').value=dateStr;
+        /* Strip HTML from content for notes preview */
+        var tmp=document.createElement('div');tmp.innerHTML=entry.content||'';
+        var plain=tmp.textContent||tmp.innerText||'';
+        document.getElementById('evNotes').value=plain.substring(0,200)+(plain.length>200?'...':'');
+        setEvColor('#0ea5e9');
+      },100);
+    },50);
+  });
+}
+/* ============================================================
+   UNIT CONVERTER
+   ============================================================ */
+var CONV_CATEGORIES=[
+  {id:'glass',name:'Glass',units:[
+    {id:'mm',name:'mm'},{id:'in',name:'inches'},{id:'ft',name:'feet'},{id:'m',name:'meters'},
+    {id:'sqft',name:'sq ft'},{id:'sqm',name:'sq m'},{id:'sqin',name:'sq in'}
+  ],conversions:{
+    mm:{in:0.03937,ft:0.003281,m:0.001,mm:1},
+    'in':{mm:25.4,ft:1/12,m:0.0254,'in':1},
+    ft:{mm:304.8,'in':12,m:0.3048,ft:1},
+    m:{mm:1000,'in':39.37,ft:3.281,m:1},
+    sqft:{sqm:0.0929,sqin:144,sqft:1},
+    sqm:{sqft:10.764,sqin:1550,sqm:1},
+    sqin:{sqft:1/144,sqm:1/1550,sqin:1}
+  },ref:'Common glass: 3mm (1/8\"), 4mm (5/32\"), 5mm (3/16\"), 6mm (1/4\"), 8mm (5/16\"), 10mm (3/8\"), 12mm (1/2\"), 19mm (3/4\")'},
+  {id:'lumber',name:'Lumber',units:[
+    {id:'in',name:'inches'},{id:'ft',name:'feet'},{id:'mm',name:'mm'},{id:'m',name:'meters'},
+    {id:'bf',name:'board ft'}
+  ],conversions:{
+    'in':{ft:1/12,mm:25.4,m:0.0254,'in':1},
+    ft:{'in':12,mm:304.8,m:0.3048,ft:1},
+    mm:{'in':0.03937,ft:0.003281,m:0.001,mm:1},
+    m:{'in':39.37,ft:3.281,mm:1000,m:1}
+  },ref:'Board foot = 1\" x 12\" x 12\". Common nominal→actual: 2x4=1.5x3.5, 2x6=1.5x5.5, 2x8=1.5x7.25, 2x10=1.5x9.25, 2x12=1.5x11.25, 4x4=3.5x3.5'},
+  {id:'finish',name:'Finishing',units:[
+    {id:'sqft',name:'sq ft'},{id:'sqm',name:'sq m'},{id:'gal',name:'gallons'},{id:'l',name:'liters'},
+    {id:'oz',name:'fl oz'},{id:'ml',name:'mL'}
+  ],conversions:{
+    sqft:{sqm:0.0929,sqft:1},sqm:{sqft:10.764,sqm:1},
+    gal:{l:3.785,oz:128,ml:3785,gal:1},l:{gal:0.2642,oz:33.814,ml:1000,l:1},
+    oz:{gal:1/128,l:0.02957,ml:29.574,oz:1},ml:{oz:0.03381,l:0.001,gal:0.000264,ml:1}
+  },ref:'Paint coverage ~350-400 sq ft/gal. Stain ~200-300 sq ft/gal. Poly ~500-600 sq ft/gal. Primer ~300-400 sq ft/gal'},
+  {id:'elec',name:'Electronics',units:[
+    {id:'v',name:'volts'},{id:'a',name:'amps'},{id:'ohm',name:'ohms'},{id:'w',name:'watts'},
+    {id:'mah',name:'mAh'},{id:'kwh',name:'kWh'}
+  ],conversions:{
+    v:{v:1},a:{a:1},ohm:{ohm:1},w:{w:1},
+    mah:{mah:1},kwh:{kwh:1}
+  },ref:'Ohm\'s law: V=IR, P=IV. Common wire gauge (AWG): 22=0.6mm auto/signal, 18=1mm speaker, 14=1.6mm 15A circuit, 12=2mm 20A circuit, 10=2.6mm 30A dryer'},
+  {id:'robo',name:'Robotics',units:[
+    {id:'rpm',name:'RPM'},{id:'rads',name:'rad/s'},{id:'deg',name:'degrees'},{id:'rad',name:'radians'},
+    {id:'nmm',name:'N\u00b7mm'},{id:'nm',name:'N\u00b7m'},{id:'ozin',name:'oz\u00b7in'}
+  ],conversions:{
+    rpm:{rads:0.10472,rpm:1},rads:{rpm:9.5493,rads:1},
+    deg:{rad:Math.PI/180,deg:1},rad:{deg:180/Math.PI,rad:1},
+    nmm:{nm:0.001,ozin:0.1416,nmm:1},nm:{nmm:1000,ozin:141.6,nm:1},ozin:{nmm:7.062,nm:0.00706,ozin:1}
+  },ref:'Servo range: typically 0-180\u00b0. Gear ratio = driven/driver teeth. Torque at wheel = motor torque \u00d7 gear ratio. Speed at wheel = motor RPM \u00f7 gear ratio'}
+];
+var convCat='glass',convFrom='mm',convTo='in';
+
+function initConverter(){
+  document.getElementById('convCats').innerHTML=CONV_CATEGORIES.map(function(c){
+    return'<button class="conv-cat'+(c.id===convCat?' active':'')+'" onclick="setConvCat(\''+c.id+'\')">'+c.name+'</button>';
+  }).join('');
+  renderConverter();
+}
+function setConvCat(id){
+  convCat=id;
+  var cat=CONV_CATEGORIES.find(function(c){return c.id===id});
+  convFrom=cat.units[0].id;convTo=cat.units.length>1?cat.units[1].id:cat.units[0].id;
+  initConverter();
+}
+function renderConverter(){
+  var cat=CONV_CATEGORIES.find(function(c){return c.id===convCat});
+  var opts=cat.units.map(function(u){return'<option value="'+u.id+'">'+u.name+'</option>'}).join('');
+  var html='<div class="conv-row">';
+  html+='<input type="number" id="convInput" value="1" oninput="doConvert()" step="any">';
+  html+='<select id="convFromSel" onchange="convFrom=this.value;doConvert()">'+opts+'</select>';
+  html+='</div>';
+  html+='<div style="text-align:center;color:var(--red);font-size:1.2rem;margin:4px 0">=</div>';
+  html+='<div class="conv-row">';
+  html+='<div class="conv-result" id="convResult">—</div>';
+  html+='<select id="convToSel" onchange="convTo=this.value;doConvert()">'+opts+'</select>';
+  html+='</div>';
+  if(cat.ref)html+='<div class="conv-ref">'+cat.ref+'</div>';
+  document.getElementById('convBody').innerHTML=html;
+  document.getElementById('convFromSel').value=convFrom;
+  document.getElementById('convToSel').value=convTo;
+  doConvert();
+}
+/* Convert decimal to nearest fraction string (1/64 precision) */
+function decToFrac(val){
+  if(val===0)return'0';
+  var neg=val<0;val=Math.abs(val);
+  var whole=Math.floor(val);
+  var dec=val-whole;
+  if(dec<1/128)return(neg?'-':'')+(whole||'0');
+  var bestNum=0,bestDen=1,bestErr=dec;
+  var denoms=[2,4,8,16,32,64];
+  for(var d=0;d<denoms.length;d++){
+    var den=denoms[d];
+    var num=Math.round(dec*den);
+    if(num<=0)continue;
+    if(num>=den){continue}
+    var err=Math.abs(dec-num/den);
+    if(err<bestErr){bestErr=err;bestNum=num;bestDen=den}
+  }
+  if(bestNum===0){whole++;return(neg?'-':'')+(whole||'0')}
+  /* Simplify */
+  while(bestNum%2===0&&bestDen%2===0){bestNum/=2;bestDen/=2}
+  var s=neg?'-':'';
+  if(whole&&bestNum)return s+whole+'-'+bestNum+'/'+bestDen;
+  if(whole)return s+whole;
+  return s+bestNum+'/'+bestDen;
+}
+function formatResult(result,toUnit){
+  if(toUnit==='ft'){
+    var neg=result<0;var abs=Math.abs(result);
+    var feet=Math.floor(abs);var inches=(abs-feet)*12;
+    var inFrac=decToFrac(inches);
+    if(feet&&inFrac!=='0')return(neg?'-':'')+feet+"' "+inFrac+'"';
+    if(feet)return(neg?'-':'')+feet+"'";
+    return(neg?'-':'')+inFrac+'"';
+  }
+  if(toUnit==='in')return decToFrac(result)+'"';
+  var display=Math.abs(result)<0.001&&result!==0?result.toExponential(4):
+              Math.abs(result)>=1000?result.toFixed(2):
+              Number(result.toPrecision(6));
+  return display;
+}
+function doConvert(){
+  var cat=CONV_CATEGORIES.find(function(c){return c.id===convCat});
+  var val=parseFloat(document.getElementById('convInput').value)||0;
+  var from=document.getElementById('convFromSel').value;
+  var to=document.getElementById('convToSel').value;
+  var result=0;
+  if(cat.conversions[from]&&cat.conversions[from][to]!==undefined){
+    result=val*cat.conversions[from][to];
+  }else if(from===to){result=val}
+  document.getElementById('convResult').textContent=formatResult(result,to);
+}
+
+/* ============================================================
+   JOBS / QUOTES
+   ============================================================ */
+var editingJobId=null,jobLineItemsList=[],jobPhotosList=[];
+
+async function loadJobs(){
+  var el=document.getElementById('jobsList');
+  var items=(await dbGetAll('jobs')).sort(function(a,b){return(b.updated_at||'').localeCompare(a.updated_at||'')});
+  if(!items.length){el.innerHTML='<p class="empty-msg">no jobs yet. tap + to create a quote.</p>';return}
+  el.innerHTML=items.map(function(j){
+    var statusCls=j.status||'quote';
+    var statusLabel={quote:'Quote',active:'In Progress',complete:'Complete'}[statusCls]||statusCls;
+    var total=0;(j.line_items||[]).forEach(function(li){total+=li.qty*li.price});
+    return'<div class="job-card" onclick="openJobEditor(\''+j.id+'\')" style="cursor:pointer"><h4>'+esc(j.title)+'<span class="job-status '+statusCls+'">'+statusLabel+'</span></h4><div class="job-client">'+esc(j.client||'')+'</div>'+(j.date?'<div style="font-size:0.6rem;color:var(--white-dim);margin-top:2px">'+esc(j.date)+'</div>':'')+'<div class="job-total">$'+total.toFixed(2)+'</div><div class="card-actions"><button class="entry-cal-btn" onclick="event.stopPropagation();jobCardToCalendar(\''+j.id+'\')">+ cal</button><button class="btn btn-danger" onclick="event.stopPropagation();deleteJobById(\''+j.id+'\')">delete</button></div></div>';
+  }).join('');
+}
+
+function openJobEditor(id){
+  editingJobId=id||null;
+  document.getElementById('jobEditorTitle').textContent=id?'Edit Job':'New Job';
+  document.getElementById('jobDeleteBtn').style.display=id?'inline-block':'none';
+  document.getElementById('jobCalBtn').style.display=id?'inline-block':'none';
+  var jerr=document.getElementById('jobError');jerr.textContent='';jerr.classList.remove('visible');
+  jobLineItemsList=[];jobPhotosList=[];
+  if(id){dbGet('jobs',id).then(function(j){if(j){
+    document.getElementById('jobTitle').value=j.title||'';
+    document.getElementById('jobClient').value=j.client||'';
+    document.getElementById('jobDate').value=j.date||'';
+    document.getElementById('jobStatus').value=j.status||'quote';
+    document.getElementById('jobNotes').value=j.notes||'';
+    jobLineItemsList=j.line_items?JSON.parse(JSON.stringify(j.line_items)):[];
+    jobPhotosList=j.photos?j.photos.slice():[];
+    renderJobLineItems();renderJobPhotos();
+  }})}else{
+    document.getElementById('jobTitle').value='';
+    document.getElementById('jobClient').value='';
+    document.getElementById('jobDate').value=formatDate(new Date());
+    document.getElementById('jobStatus').value='quote';
+    document.getElementById('jobNotes').value='';
+    renderJobLineItems();renderJobPhotos();
+  }
+  openModal('jobModal');
+}
+function closeJobEditor(){closeModal('jobModal');editingJobId=null}
+
+function addLineItem(){
+  var desc=document.getElementById('liDesc').value.trim();
+  var qty=parseFloat(document.getElementById('liQty').value)||1;
+  var price=parseFloat(document.getElementById('liPrice').value)||0;
+  if(!desc)return;
+  jobLineItemsList.push({desc:desc,qty:qty,price:price});
+  document.getElementById('liDesc').value='';document.getElementById('liQty').value='';document.getElementById('liPrice').value='';
+  renderJobLineItems();
+}
+function removeLineItem(idx){jobLineItemsList.splice(idx,1);renderJobLineItems()}
+function renderJobLineItems(){
+  var el=document.getElementById('jobLineItems');
+  if(!jobLineItemsList.length){el.innerHTML='<p style="font-size:0.7rem;color:var(--white-dim)">No items yet.</p>';document.getElementById('jobGrandTotal').textContent='$0.00';return}
+  var total=0;
+  var html='<table class="line-items-table"><tr><th>Item</th><th>Qty</th><th>Price</th><th>Total</th><th></th></tr>';
+  jobLineItemsList.forEach(function(li,i){
+    var lt=li.qty*li.price;total+=lt;
+    html+='<tr><td>'+esc(li.desc)+'</td><td>'+li.qty+'</td><td>$'+li.price.toFixed(2)+'</td><td class="li-total">$'+lt.toFixed(2)+'</td><td class="li-del" onclick="removeLineItem('+i+')">\u2715</td></tr>';
+  });
+  html+='</table>';
+  el.innerHTML=html;
+  document.getElementById('jobGrandTotal').textContent='$'+total.toFixed(2);
+}
+
+function addJobPhoto(){
+  var input=document.createElement('input');input.type='file';input.accept='image/*';
+  input.onchange=function(){
+    var file=input.files[0];if(!file)return;
+    resizeImage(file,800,0.6,function(dataUrl){
+      jobPhotosList.push(dataUrl);renderJobPhotos();
+    });
+  };input.click();
+}
+function removeJobPhoto(idx){jobPhotosList.splice(idx,1);renderJobPhotos()}
+function renderJobPhotos(){
+  var el=document.getElementById('jobPhotos');
+  if(!jobPhotosList.length){el.innerHTML='';return}
+  el.innerHTML=jobPhotosList.map(function(p,i){
+    return'<img src="'+p+'" onclick="if(confirm(\'Remove this photo?\'))removeJobPhoto('+i+')">';
+  }).join('');
+}
+
+async function saveJob(){
+  var title=document.getElementById('jobTitle').value.trim();
+  if(!title){var e=document.getElementById('jobError');e.textContent='Job title required.';e.classList.add('visible');return}
+  var job={
+    id:editingJobId||uid(),
+    title:title,
+    client:document.getElementById('jobClient').value.trim(),
+    date:document.getElementById('jobDate').value.trim(),
+    status:document.getElementById('jobStatus').value,
+    line_items:jobLineItemsList,
+    photos:jobPhotosList,
+    notes:document.getElementById('jobNotes').value.trim(),
+    created_at:new Date().toISOString(),
+    updated_at:new Date().toISOString()
+  };
+  if(editingJobId){var old=await dbGet('jobs',editingJobId);if(old&&old.created_at)job.created_at=old.created_at}
+  await dbPut('jobs',job);closeJobEditor();loadJobs();showToast(editingJobId?'Job updated':'Job saved');
+}
+
+async function deleteJob(){
+  if(!editingJobId||!confirm('Delete this job?'))return;
+  await dbDel('jobs',editingJobId);closeJobEditor();loadJobs();showToast('Job deleted');
+}
+async function deleteJobById(id){
+  if(!confirm('Delete this job?'))return;
+  await dbDel('jobs',id);loadJobs();showToast('Deleted');
+}
+function jobCardToCalendar(id){
+  dbGet('jobs',id).then(function(j){
+    if(!j)return;
+    var total=0;(j.line_items||[]).forEach(function(li){total+=li.qty*li.price});
+    switchTab('Productivity');
+    setTimeout(function(){
+      showProd('calendar',{target:document.querySelector('.prod-sub-btn')});
+      setTimeout(function(){
+        openEventEditor();
+        document.getElementById('evTitle').value=j.title+(j.client?' - '+j.client:'');
+        document.getElementById('evDate').value=j.date||formatDate(new Date());
+        document.getElementById('evNotes').value='Job: '+j.title+'\nClient: '+(j.client||'N/A')+'\nTotal: $'+total.toFixed(2)+(j.notes?'\n'+j.notes:'');
+        setEvColor('#f59e0b');
+      },100);
+    },50);
+  });
+}
+
+function jobToCalendar(){
+  if(!editingJobId)return;
+  dbGet('jobs',editingJobId).then(function(j){
+    if(!j)return;
+    var total=0;(j.line_items||[]).forEach(function(li){total+=li.qty*li.price});
+    closeJobEditor();
+    /* Switch to calendar */
+    switchTab('Productivity');showProd('calendar',{target:document.querySelector('.prod-sub-btn')});
+    /* Pre-fill event editor */
+    setTimeout(function(){
+      openEventEditor();
+      document.getElementById('evTitle').value=j.title+(j.client?' - '+j.client:'');
+      document.getElementById('evDate').value=j.date||formatDate(new Date());
+      document.getElementById('evNotes').value='Job: '+j.title+'\nClient: '+(j.client||'N/A')+'\nTotal: $'+total.toFixed(2)+(j.notes?'\n'+j.notes:'');
+      setEvColor('#f59e0b');
+    },100);
+  });
+}
+
+
+/* ============================================================
+   PAINT TOOL — multi-layer canvas drawing
+   ============================================================ */
+var paintLayers=[],paintActiveLayer=0,paintTool='pen',paintColor='#e50000',paintDrawing=false;
+var paintUndoStack=[],paintRedoStack=[],paintCallback=null;
+var PAINT_SWATCHES=['#e50000','#ff6b35','#f59e0b','#22c55e','#0ea5e9','#a855f7','#f43f5e','#ffffff','#888888','#000000'];
+var PAINT_W=0,PAINT_H=0;
+
+function openPaint(callback){
+  paintCallback=callback;
+  paintUndoStack=[];paintRedoStack=[];
+  document.getElementById('paintOverlay').classList.add('visible');
+  /* Size canvas to container */
+  var wrap=document.getElementById('paintCanvasWrap');
+  var w=wrap.clientWidth,h=wrap.clientHeight;
+  PAINT_W=w;PAINT_H=h;
+  /* Init layers */
+  paintLayers=[{name:'Layer 1',canvas:createLayerCanvas(w,h),visible:true,opacity:1}];
+  paintActiveLayer=0;
+  var mainCanvas=document.getElementById('paintCanvas');
+  mainCanvas.width=w;mainCanvas.height=h;
+  mainCanvas.style.width=w+'px';mainCanvas.style.height=h+'px';
+  renderPaintSwatches();
+  compositeAndDisplay();
+  renderPaintLayersUI();
+  /* Touch/mouse handlers */
+  mainCanvas.onpointerdown=paintStart;
+  mainCanvas.onpointermove=paintMove;
+  mainCanvas.onpointerup=paintEnd;
+  mainCanvas.onpointercancel=paintEnd;
+  mainCanvas.onpointerleave=paintEnd;
+}
+function cancelPaint(){
+  document.getElementById('paintOverlay').classList.remove('visible');
+  var mc=document.getElementById('paintCanvas');
+  mc.onpointerdown=null;mc.onpointermove=null;mc.onpointerup=null;
+  mc.onpointercancel=null;mc.onpointerleave=null;
+  paintLayers=[];paintCallback=null;
+}
+function createLayerCanvas(w,h){
+  var c=document.createElement('canvas');c.width=w;c.height=h;return c;
+}
+
+/* Compositing — draw all visible layers onto the display canvas */
+function compositeAndDisplay(){
+  var mc=document.getElementById('paintCanvas');
+  var ctx=mc.getContext('2d');
+  ctx.clearRect(0,0,mc.width,mc.height);
+  /* White background so drawing is visible */
+  ctx.fillStyle='#ffffff';ctx.fillRect(0,0,mc.width,mc.height);
+  for(var i=0;i<paintLayers.length;i++){
+    var layer=paintLayers[i];
+    if(!layer.visible)continue;
+    ctx.globalAlpha=layer.opacity;
+    ctx.drawImage(layer.canvas,0,0);
+  }
+  ctx.globalAlpha=1;
+}
+
+/* Drawing */
+var lastX=0,lastY=0;
+function getCanvasPos(e){
+  var rect=document.getElementById('paintCanvas').getBoundingClientRect();
+  return{x:e.clientX-rect.left,y:e.clientY-rect.top};
+}
+function paintStart(e){
+  e.preventDefault();
+  paintDrawing=true;
+  var p=getCanvasPos(e);
+  lastX=p.x;lastY=p.y;
+  /* Save undo state */
+  pushPaintUndo();
+  /* For spray, start immediately */
+  if(paintTool==='spray')sprayAt(p.x,p.y);
+}
+function paintMove(e){
+  if(!paintDrawing)return;
+  e.preventDefault();
+  var p=getCanvasPos(e);
+  var layer=paintLayers[paintActiveLayer];
+  if(!layer)return;
+  var ctx=layer.canvas.getContext('2d');
+  var size=parseInt(document.getElementById('paintSize').value);
+  var opacity=parseInt(document.getElementById('paintOpacity').value)/100;
+  if(paintTool==='pen'){
+    ctx.globalAlpha=opacity;ctx.strokeStyle=paintColor;
+    ctx.lineWidth=size;ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.beginPath();ctx.moveTo(lastX,lastY);ctx.lineTo(p.x,p.y);ctx.stroke();
+    ctx.globalAlpha=1;
+  }else if(paintTool==='marker'){
+    ctx.globalAlpha=opacity*0.3;ctx.strokeStyle=paintColor;
+    ctx.lineWidth=size*3;ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.beginPath();ctx.moveTo(lastX,lastY);ctx.lineTo(p.x,p.y);ctx.stroke();
+    ctx.globalAlpha=1;
+  }else if(paintTool==='spray'){
+    sprayAt(p.x,p.y);
+  }else if(paintTool==='eraser'){
+    ctx.globalCompositeOperation='destination-out';
+    ctx.lineWidth=size*2;ctx.lineCap='round';ctx.lineJoin='round';
+    ctx.beginPath();ctx.moveTo(lastX,lastY);ctx.lineTo(p.x,p.y);ctx.stroke();
+    ctx.globalCompositeOperation='source-over';
+  }
+  lastX=p.x;lastY=p.y;
+  compositeAndDisplay();
+}
+function sprayAt(x,y){
+  var layer=paintLayers[paintActiveLayer];if(!layer)return;
+  var ctx=layer.canvas.getContext('2d');
+  var size=parseInt(document.getElementById('paintSize').value)*2;
+  var opacity=parseInt(document.getElementById('paintOpacity').value)/100;
+  var density=Math.floor(size*1.5);
+  ctx.fillStyle=paintColor;
+  for(var i=0;i<density;i++){
+    var angle=Math.random()*Math.PI*2;
+    var radius=Math.random()*size;
+    var px=x+Math.cos(angle)*radius;
+    var py=y+Math.sin(angle)*radius;
+    ctx.globalAlpha=opacity*Math.random()*0.5;
+    ctx.beginPath();ctx.arc(px,py,0.8,0,Math.PI*2);ctx.fill();
+  }
+  ctx.globalAlpha=1;
+}
+function paintEnd(e){
+  if(!paintDrawing)return;
+  paintDrawing=false;
+  paintRedoStack=[];
+}
+
+/* Undo/Redo */
+function pushPaintUndo(){
+  var state=paintLayers.map(function(l){
+    var c=createLayerCanvas(l.canvas.width,l.canvas.height);
+    c.getContext('2d').drawImage(l.canvas,0,0);
+    return{name:l.name,canvas:c,visible:l.visible,opacity:l.opacity};
+  });
+  paintUndoStack.push({layers:state,active:paintActiveLayer});
+  if(paintUndoStack.length>30)paintUndoStack.shift();
+}
+function paintUndo(){
+  if(!paintUndoStack.length)return;
+  /* Save current to redo */
+  var cur=paintLayers.map(function(l){
+    var c=createLayerCanvas(l.canvas.width,l.canvas.height);
+    c.getContext('2d').drawImage(l.canvas,0,0);
+    return{name:l.name,canvas:c,visible:l.visible,opacity:l.opacity};
+  });
+  paintRedoStack.push({layers:cur,active:paintActiveLayer});
+  var state=paintUndoStack.pop();
+  paintLayers=state.layers;paintActiveLayer=state.active;
+  compositeAndDisplay();renderPaintLayersUI();
+}
+function paintRedo(){
+  if(!paintRedoStack.length)return;
+  pushPaintUndo();
+  var state=paintRedoStack.pop();
+  paintLayers=state.layers;paintActiveLayer=state.active;
+  compositeAndDisplay();renderPaintLayersUI();
+}
+
+/* Tools */
+function setPaintTool(tool){
+  paintTool=tool;
+  ['ptPen','ptMarker','ptSpray','ptEraser'].forEach(function(id){document.getElementById(id).classList.remove('active')});
+  var map={pen:'ptPen',marker:'ptMarker',spray:'ptSpray',eraser:'ptEraser'};
+  if(map[tool])document.getElementById(map[tool]).classList.add('active');
+}
+function setPaintColor(c){
+  paintColor=c;
+  document.getElementById('paintColorPicker').value=c;
+  renderPaintSwatches();
+}
+function renderPaintSwatches(){
+  document.getElementById('paintSwatches').innerHTML=PAINT_SWATCHES.map(function(c){
+    return'<div class="paint-swatch'+(c===paintColor?' active':'')+'" style="background:'+c+'" onclick="setPaintColor(\''+c+'\')"></div>';
+  }).join('');
+}
+function clearPaintLayer(){
+  if(!confirm('Clear this layer?'))return;
+  pushPaintUndo();
+  var layer=paintLayers[paintActiveLayer];if(!layer)return;
+  var ctx=layer.canvas.getContext('2d');
+  ctx.clearRect(0,0,layer.canvas.width,layer.canvas.height);
+  compositeAndDisplay();
+}
+
+/* Layers UI */
+function togglePaintLayers(){document.getElementById('paintLayersPanel').classList.toggle('visible')}
+function renderPaintLayersUI(){
+  var el=document.getElementById('paintLayersPanel');
+  var html='<div class="paint-layers-header"><span>Layers</span><button class="btn" style="font-size:0.45rem;padding:2px 6px" onclick="addPaintLayer()">+</button></div>';
+  for(var i=paintLayers.length-1;i>=0;i--){
+    var l=paintLayers[i];
+    html+='<div class="paint-layer-item'+(i===paintActiveLayer?' active':'')+'" onclick="selectPaintLayer('+i+')">';
+    html+='<span class="layer-vis" onclick="event.stopPropagation();toggleLayerVis('+i+')">'+(l.visible?'\u{1F441}':'\u{1F6AB}')+'</span>';
+    html+='<span class="layer-name">'+l.name+'</span>';
+    if(paintLayers.length>1)html+='<span class="layer-del" onclick="event.stopPropagation();deletePaintLayer('+i+')">\u2715</span>';
+    html+='</div>';
+  }
+  el.innerHTML=html;
+}
+function selectPaintLayer(i){paintActiveLayer=i;renderPaintLayersUI()}
+function addPaintLayer(){
+  pushPaintUndo();
+  var n=paintLayers.length+1;
+  paintLayers.push({name:'Layer '+n,canvas:createLayerCanvas(PAINT_W,PAINT_H),visible:true,opacity:1});
+  paintActiveLayer=paintLayers.length-1;
+  compositeAndDisplay();renderPaintLayersUI();
+}
+function deletePaintLayer(i){
+  if(paintLayers.length<=1)return;
+  pushPaintUndo();
+  paintLayers.splice(i,1);
+  if(paintActiveLayer>=paintLayers.length)paintActiveLayer=paintLayers.length-1;
+  compositeAndDisplay();renderPaintLayersUI();
+}
+function toggleLayerVis(i){
+  paintLayers[i].visible=!paintLayers[i].visible;
+  compositeAndDisplay();renderPaintLayersUI();
+}
+
+/* Save — composite all layers to one image, send to callback */
+function savePaintToEntry(){
+  var mc=document.getElementById('paintCanvas');
+  var dataUrl=mc.toDataURL('image/png');
+  var cb=paintCallback;
+  cancelPaint();
+  if(cb)cb(dataUrl);
+}
+
 
 /* ============================================================
    SOLITAIRE — Klondike Draw-3 (namespaced as SOL)
@@ -1378,7 +2477,7 @@ if('serviceWorker' in navigator){navigator.serviceWorker.register('sw.js').catch
 /* ============================================================
    INIT
    ============================================================ */
-function loadAll(){loadCardConfig().then(function(){window.cardConfig=cardConfig});loadTheme();refreshCardBackSvg();loadEntries();loadTiles();loadBeliefs();loadProjects();loadGames();loadResources();loadSocials();loadHero();loadAbout();loadFooter()}
+function loadAll(){loadCardConfig().then(function(){window.cardConfig=cardConfig});loadTheme();refreshCardBackSvg();loadEntries();loadTiles();loadBeliefs();loadProjects();loadGames();loadResources();loadSocials();loadHero();loadAbout();loadFooter();loadEvents();loadJobs();initConverter()}
 openDB().then(()=>migrateOldIds()).then(()=>loadAll()).catch(e=>console.error('DB error:',e));
 </script>
 </body>
