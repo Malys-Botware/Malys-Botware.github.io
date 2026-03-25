@@ -2,7 +2,7 @@
 
 my personal corner of the internet. a place to write, think out loud, and document what i'm building and learning.
 
-**live at:** [malys-botware.github.io](https://malys-botware.github.io)
+**live at:** [balthazarvsbotware.github.io](https://balthazarvsbotware.github.io)
 
 ## what is this
 
@@ -10,14 +10,21 @@ a single-file personal site that doubles as a full CMS — pure HTML, CSS, and v
 
 every section is editable from the site itself when logged in. content is stored in a [Supabase](https://supabase.com) database (open source, MIT-licensed client). journal and dashboard entries use a [Quill](https://quilljs.com) rich text editor (BSD-3-Clause). only i can log in — public signups are disabled.
 
+comes with a companion PWA — **Bal's Builders Journal** — a fully offline journal, productivity suite, and trade tools app at [/journal/](https://balthazarvsbotware.github.io/journal/).
+
 ## structure
 
 ```
-index.html          ← the entire site + CMS (HTML + CSS + JS in one file)
-SETUP_GUIDE.md      ← step-by-step Supabase configuration
-SECURITY_OVERVIEW.md ← full security rundown
-LICENSE             ← MIT for code, CC BY-NC-SA 4.0 for content
-README.md           ← you're here
+index.html              ← the entire site + CMS (HTML + CSS + JS in one file)
+journal/index.html      ← Bal's Builders Journal PWA
+journal/sw.js           ← service worker for offline support
+journal/manifest.json   ← PWA manifest
+journal/icon.svg        ← app icon
+games/solitaire.html    ← Klondike solitaire (standalone)
+SETUP_GUIDE.md          ← step-by-step Supabase configuration
+SECURITY_OVERVIEW.md    ← full security rundown
+LICENSE                 ← MIT for code, CC BY-NC-SA 4.0 for content
+README.md               ← you're here
 ```
 
 ## dependencies
@@ -37,7 +44,9 @@ all loaded from CDN. no npm, no node_modules, no build step.
 | Beliefs | Individual cards (add/edit/delete) | Text fields |
 | Dashboard | Status tiles (draft/publish) | Rich text (Quill) |
 | Projects | Project cards (add/edit/delete) | Text fields |
+| Games | Game cards (add/edit/delete) | Text fields |
 | Journal | Blog entries (draft/publish + share) | Rich text (Quill) |
+| Resources | Categorized learning links | Text fields |
 | Connect | Social links (add/edit/delete) | Text fields + icon picker |
 | Footer | Two text lines | Text fields |
 
